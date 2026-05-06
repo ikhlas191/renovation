@@ -56,16 +56,23 @@
             color: var(--primary-blue);
         }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-blue);
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             border-radius: 8px;
+        }
+
+        .logo-text {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
+            flex-direction: column;
+        }
+
+        .logo-text span {
+            font-size: 12px;
+            color: var(--text-light);
         }
 
         nav ul {
@@ -102,7 +109,6 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%231a5490" width="1200" height="600"/></svg>');
             background-size: cover;
             background-position: center;
             height: 600px;
@@ -118,18 +124,12 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: drift 20s linear infinite;
-        }
-
-        @keyframes drift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
         }
 
         .hero-content {
@@ -189,13 +189,11 @@
         .about-image {
             width: 100%;
             height: 400px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--light-blue);
             border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 60px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
         }
 
         /* Services Section */
@@ -271,6 +269,10 @@
         .feature-icon {
             font-size: 40px;
             margin-bottom: 15px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .feature-box h3 {
@@ -302,10 +304,22 @@
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.3s;
+            background-size: cover;
+            background-position: center;
         }
 
         .gallery-item:hover {
             transform: scale(1.05);
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: rgba(255,255,255,0.5);
         }
 
         /* Clients Section */
@@ -336,6 +350,10 @@
         .client-icon {
             font-size: 50px;
             margin-bottom: 15px;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .client-box h3 {
@@ -377,6 +395,8 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 10px;
             margin-bottom: 15px;
+            background-size: cover;
+            background-position: center;
         }
 
         .coverage-item h3 {
@@ -434,6 +454,8 @@
             height: 400px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 15px;
+            background-size: cover;
+            background-position: center;
         }
 
         /* Footer */
@@ -442,24 +464,6 @@
             color: white;
             text-align: center;
             padding: 20px;
-        }
-
-        /* Admin Activation System */
-        .admin-trigger {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: #25d366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 24px;
-            z-index: 50;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         /* Admin Panel Styles */
@@ -474,6 +478,8 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            overflow-y: auto;
+            padding: 20px 0;
         }
 
         #adminPanel.active {
@@ -489,6 +495,7 @@
             overflow-y: auto;
             padding: 40px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin: 20px 0;
         }
 
         .admin-header {
@@ -524,6 +531,7 @@
             gap: 10px;
             margin-bottom: 30px;
             border-bottom: 1px solid #ddd;
+            flex-wrap: wrap;
         }
 
         .admin-tab {
@@ -535,6 +543,7 @@
             font-weight: 500;
             border-bottom: 3px solid transparent;
             transition: all 0.3s;
+            font-size: 14px;
         }
 
         .admin-tab.active {
@@ -562,7 +571,8 @@
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -577,16 +587,41 @@
         }
 
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary-blue);
             box-shadow: 0 0 5px rgba(0,102,204,0.3);
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .image-upload {
+            border: 2px dashed var(--primary-blue);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .image-upload:hover {
+            background: var(--light-blue);
+        }
+
+        .image-upload input[type="file"] {
+            display: none;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin-top: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .image-preview.show {
+            display: block;
         }
 
         .save-btn {
@@ -603,6 +638,12 @@
 
         .save-btn:hover {
             background: var(--dark-blue);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
         .color-picker {
@@ -625,7 +666,21 @@
             transform: scale(1.1);
         }
 
-        .edit-item {
+        .service-item-edit {
+            background: var(--light-blue);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .service-item-header {
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        .gallery-item-edit {
             background: var(--light-blue);
             padding: 15px;
             border-radius: 8px;
@@ -633,18 +688,40 @@
             border-left: 4px solid var(--primary-blue);
         }
 
-        .edit-item .label {
-            font-weight: bold;
-            color: var(--primary-blue);
-            margin-bottom: 8px;
+        .gallery-preview {
+            width: 100%;
+            max-width: 150px;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .remove-btn {
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .remove-btn:hover {
+            background: #cc0000;
         }
 
         @media (max-width: 768px) {
             .services-grid,
             .features-grid,
             .clients-grid,
-            .gallery-grid,
-            .coverage-grid {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
                 grid-template-columns: 1fr;
             }
 
@@ -663,6 +740,15 @@
             section {
                 padding: 40px 0;
             }
+
+            .admin-tabs {
+                gap: 5px;
+            }
+
+            .admin-tab {
+                padding: 10px 15px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -671,8 +757,11 @@
     <nav>
         <div class="nav-container">
             <div class="logo">
-                <div class="logo-icon">🏠</div>
-                <span id="companyName">JH ONE STOP SERVICES</span>
+                <div class="logo-image" id="logoImage"></div>
+                <div class="logo-text">
+                    <span id="companyName">JH ONE STOP SERVICES</span>
+                    <span id="companySubtitle">PLUMBING & ROOFING</span>
+                </div>
             </div>
             <ul>
                 <li><a href="#about">ABOUT US</a></li>
@@ -686,7 +775,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="heroSection">
         <div class="hero-content">
             <h1 id="heroTitle">Your Trusted Renovation & Repair Partner</h1>
             <p id="heroSubtitle">JH One Stop Services - 25 Years of Reliable Experience</p>
@@ -700,64 +789,23 @@
             <h3 style="color: var(--primary-blue); font-size: 24px; margin-bottom: 15px;" id="aboutSubtitle">25 Years of Reliable Expertise</h3>
             <p id="aboutText">Looking for a trustworthy contractor for your renovation or repair needs? With over 25 years of hands-on experience, JH One Stop Services offers a complete range of renovation and construction solutions for residential, commercial, and industrial properties across the Klang Valley.</p>
         </div>
-        <div class="about-image">📸</div>
+        <div class="about-image" id="aboutImage"></div>
     </section>
 
     <!-- Services Section -->
     <section id="services" class="container">
         <h2>OUR SERVICES</h2>
         <p id="servicesDescription">We offer a wide range of renovation, construction, and repair services—all under one roof. Whether it's a minor repair or a major upgrade, our team is equipped to handle it with precision and care.</p>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>General Renovation & Construction:</h3>
-                <ul id="serviceList1">
-                    <li>Roofing installation & repair</li>
-                    <li>Tiling work</li>
-                    <li>House extensions</li>
-                    <li>Ceiling repair & installation</li>
-                    <li>Painting services</li>
-                    <li>PU injection & waterproofing</li>
-                </ul>
-            </div>
-            <div class="service-card">
-                <h3>Home System Services:</h3>
-                <ul id="serviceList2">
-                    <li>Plumbing & water pipe solutions</li>
-                    <li>Electrical wiring</li>
-                    <li>Air conditioning service & repair</li>
-                </ul>
-            </div>
-            <div class="service-card">
-                <h3>Leak & Clog Specialists:</h3>
-                <p id="leakSpecialistText">Our specialty lies in solving water pipe blockages, toilet leakages, and all types of roofing leaks. No matter how tough the issue, our expert technicians are ready to fix it—efficiently and affordably.</p>
-            </div>
+        <div class="services-grid" id="servicesGrid">
+            <!-- Service cards will be populated by JS -->
         </div>
     </section>
 
     <!-- Why Choose Us -->
     <section id="whychoose" class="container">
         <h2>WHY CHOOSE US</h2>
-        <div class="features-grid">
-            <div class="feature-box">
-                <div class="feature-icon">✓</div>
-                <h3>Over 25 Years of Experience</h3>
-                <p>We've built a solid reputation for quality workmanship and fast problem-solving.</p>
-            </div>
-            <div class="feature-box">
-                <div class="feature-icon">✓</div>
-                <h3>Specialists in Leak Detection & Repairs</h3>
-                <p>Our most requested services are toilet and roofing leakage repairs—done right the first time.</p>
-            </div>
-            <div class="feature-box">
-                <div class="feature-icon">✓</div>
-                <h3>One-Stop Convenience</h3>
-                <p>No more juggling different contractors. From plumbing to painting—we do it all.</p>
-            </div>
-            <div class="feature-box">
-                <div class="feature-icon">✓</div>
-                <h3>Wide Coverage</h3>
-                <p>We proudly serve Selangor, Kuala Lumpur, and the entire Klang Valley area.</p>
-            </div>
+        <div class="features-grid" id="featuresGrid">
+            <!-- Features will be populated by JS -->
         </div>
     </section>
 
@@ -765,11 +813,8 @@
     <section id="gallery" class="container">
         <h2>OUR PROJECT GALLERY</h2>
         <p id="galleryDescription">Take a look at some of our completed projects to see the quality of our workmanship and the wide range of services we provide. From roofing and tiling to plumbing and waterproofing, every job is handled with precision and care.</p>
-        <div class="gallery-grid">
-            <div class="gallery-item"></div>
-            <div class="gallery-item"></div>
-            <div class="gallery-item"></div>
-            <div class="gallery-item"></div>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery items will be populated by JS -->
         </div>
     </section>
 
@@ -777,23 +822,8 @@
     <section id="clients" class="container">
         <h2>WHO WE SERVE</h2>
         <p style="margin-bottom: 40px;">Whether it's a residential makeover or commercial repair, JH One Stop Services is your dependable partner.</p>
-        <div class="clients-grid">
-            <div class="client-box">
-                <div class="client-icon">🏠</div>
-                <h3>Homeowners</h3>
-            </div>
-            <div class="client-box">
-                <div class="client-icon">🏢</div>
-                <h3>Office & Shopplot Owners</h3>
-            </div>
-            <div class="client-box">
-                <div class="client-icon">🔑</div>
-                <h3>Property Managers</h3>
-            </div>
-            <div class="client-box">
-                <div class="client-icon">🏭</div>
-                <h3>Industrial Clients</h3>
-            </div>
+        <div class="clients-grid" id="clientsGrid">
+            <!-- Client boxes will be populated by JS -->
         </div>
     </section>
 
@@ -802,15 +832,8 @@
         <h2>COVER AREA</h2>
         <p>At JH One Stop Services, we are committed to bringing reliable renovation and repair services right to your doorstep—wherever you are in the Klang Valley.</p>
         <p>We proudly serve a wide range of areas, including but not limited to:</p>
-        <div class="coverage-grid">
-            <div class="coverage-item">
-                <div class="coverage-image"></div>
-                <h3>Selangor</h3>
-            </div>
-            <div class="coverage-item">
-                <div class="coverage-image"></div>
-                <h3>Kuala Lumpur</h3>
-            </div>
+        <div class="coverage-grid" id="coverageGrid">
+            <!-- Coverage items will be populated by JS -->
         </div>
     </section>
 
@@ -844,7 +867,7 @@
                 </div>
             </div>
         </div>
-        <div class="contact-image"></div>
+        <div class="contact-image" id="contactImage"></div>
     </section>
 
     <!-- Footer -->
@@ -852,8 +875,8 @@
         <p id="footerText">&copy; 2025 JH One Stop Services. All rights reserved.</p>
     </footer>
 
-    <!-- WhatsApp Button -->
-    <div class="admin-trigger">📱</div>
+    <!-- Admin Trigger -->
+    <div style="position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; z-index: 50; box-shadow: 0 4px 12px rgba(0,0,0,0.2);" onclick="handleAdminTrigger()">📱</div>
 
     <!-- Admin Panel -->
     <div id="adminPanel">
@@ -864,27 +887,38 @@
             </div>
 
             <div class="admin-tabs">
-                <button class="admin-tab active" onclick="switchTab('company')">Company</button>
-                <button class="admin-tab" onclick="switchTab('hero')">Hero Section</button>
+                <button class="admin-tab active" onclick="switchTab('logo')">Logo</button>
+                <button class="admin-tab" onclick="switchTab('hero')">Hero</button>
                 <button class="admin-tab" onclick="switchTab('about')">About</button>
                 <button class="admin-tab" onclick="switchTab('services')">Services</button>
-                <button class="admin-tab" onclick="switchTab('features')">Features</button>
+                <button class="admin-tab" onclick="switchTab('features')">Why Choose</button>
+                <button class="admin-tab" onclick="switchTab('gallery')">Gallery</button>
+                <button class="admin-tab" onclick="switchTab('clients')">Who Serve</button>
+                <button class="admin-tab" onclick="switchTab('coverage')">Coverage</button>
                 <button class="admin-tab" onclick="switchTab('contact')">Contact</button>
                 <button class="admin-tab" onclick="switchTab('theme')">Theme</button>
             </div>
 
-            <!-- Company Tab -->
-            <div id="company" class="tab-content active">
-                <h3>Company Information</h3>
+            <!-- Logo Tab -->
+            <div id="logo" class="tab-content active">
+                <h3>Logo Management</h3>
                 <div class="form-group">
                     <label>Company Name</label>
                     <input type="text" id="adminCompanyName" placeholder="Enter company name">
                 </div>
                 <div class="form-group">
-                    <label>Footer Text</label>
-                    <input type="text" id="adminFooterText" placeholder="Enter footer text">
+                    <label>Company Subtitle</label>
+                    <input type="text" id="adminCompanySubtitle" placeholder="Enter company subtitle">
                 </div>
-                <button class="save-btn" onclick="saveCompany()">Save Changes</button>
+                <div class="form-group">
+                    <label>Logo Image (500x500px recommended)</label>
+                    <div class="image-upload" onclick="document.getElementById('logoImageInput').click()">
+                        <p>Click to upload logo image</p>
+                        <input type="file" id="logoImageInput" accept="image/*" onchange="previewLogoImage(event)">
+                    </div>
+                    <img id="logoImagePreview" class="image-preview" alt="Logo preview">
+                </div>
+                <button class="save-btn" onclick="saveLogo()">Save Changes</button>
             </div>
 
             <!-- Hero Tab -->
@@ -897,6 +931,14 @@
                 <div class="form-group">
                     <label>Subtitle</label>
                     <input type="text" id="adminHeroSubtitle" placeholder="Enter subtitle">
+                </div>
+                <div class="form-group">
+                    <label>Background Image (1920x600px recommended)</label>
+                    <div class="image-upload" onclick="document.getElementById('heroImageInput').click()">
+                        <p>Click to upload hero background</p>
+                        <input type="file" id="heroImageInput" accept="image/*" onchange="previewHeroImage(event)">
+                    </div>
+                    <img id="heroImagePreview" class="image-preview" alt="Hero preview">
                 </div>
                 <button class="save-btn" onclick="saveHero()">Save Changes</button>
             </div>
@@ -912,6 +954,14 @@
                     <label>About Text</label>
                     <textarea id="adminAboutText" placeholder="Enter about section text"></textarea>
                 </div>
+                <div class="form-group">
+                    <label>About Image (500x400px recommended)</label>
+                    <div class="image-upload" onclick="document.getElementById('aboutImageInput').click()">
+                        <p>Click to upload about image</p>
+                        <input type="file" id="aboutImageInput" accept="image/*" onchange="previewAboutImage(event)">
+                    </div>
+                    <img id="aboutImagePreview" class="image-preview" alt="About preview">
+                </div>
                 <button class="save-btn" onclick="saveAbout()">Save Changes</button>
             </div>
 
@@ -919,32 +969,44 @@
             <div id="services" class="tab-content">
                 <h3>Services Section</h3>
                 <div class="form-group">
-                    <label>Description</label>
+                    <label>Services Description</label>
                     <textarea id="adminServicesDescription" placeholder="Enter services description"></textarea>
                 </div>
-                <div class="form-group">
-                    <label>Service List 1 (General Renovation) - Enter each item on new line</label>
-                    <textarea id="adminServiceList1" placeholder="Enter services separated by line breaks"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Service List 2 (Home System) - Enter each item on new line</label>
-                    <textarea id="adminServiceList2" placeholder="Enter services separated by line breaks"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Leak Specialist Text</label>
-                    <textarea id="adminLeakSpecialistText" placeholder="Enter leak specialist text"></textarea>
-                </div>
+                <div id="servicesEditContainer"></div>
                 <button class="save-btn" onclick="saveServices()">Save Changes</button>
             </div>
 
             <!-- Features Tab -->
             <div id="features" class="tab-content">
                 <h3>Why Choose Us Features</h3>
+                <div id="featuresEditContainer"></div>
+                <button class="save-btn" onclick="saveFeatures()">Save Changes</button>
+            </div>
+
+            <!-- Gallery Tab -->
+            <div id="gallery" class="tab-content">
+                <h3>Project Gallery (Max 16 images)</h3>
                 <div class="form-group">
                     <label>Gallery Description</label>
                     <textarea id="adminGalleryDescription" placeholder="Enter gallery description"></textarea>
                 </div>
-                <button class="save-btn" onclick="saveFeatures()">Save Changes</button>
+                <div id="galleryEditContainer"></div>
+                <button class="save-btn" onclick="addGalleryImage()">Add New Image</button>
+                <button class="save-btn" onclick="saveGallery()" style="background: var(--primary-blue);">Save All</button>
+            </div>
+
+            <!-- Clients Tab -->
+            <div id="clients" class="tab-content">
+                <h3>Who We Serve</h3>
+                <div id="clientsEditContainer"></div>
+                <button class="save-btn" onclick="saveClients()">Save Changes</button>
+            </div>
+
+            <!-- Coverage Tab -->
+            <div id="coverage" class="tab-content">
+                <h3>Coverage Area</h3>
+                <div id="coverageEditContainer"></div>
+                <button class="save-btn" onclick="saveCoverage()">Save Changes</button>
             </div>
 
             <!-- Contact Tab -->
@@ -961,6 +1023,14 @@
                 <div class="form-group">
                     <label>Email</label>
                     <input type="text" id="adminContactEmail" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label>Contact Image (600x400px recommended)</label>
+                    <div class="image-upload" onclick="document.getElementById('contactImageInput').click()">
+                        <p>Click to upload contact image</p>
+                        <input type="file" id="contactImageInput" accept="image/*" onchange="previewContactImage(event)">
+                    </div>
+                    <img id="contactImagePreview" class="image-preview" alt="Contact preview">
                 </div>
                 <button class="save-btn" onclick="saveContact()">Save Changes</button>
             </div>
@@ -993,118 +1063,413 @@
     </div>
 
     <script>
-        // Admin activation system - click 5 times to unlock
+        // Data storage
+        let siteData = {
+            company: { name: 'JH ONE STOP SERVICES', subtitle: 'PLUMBING & ROOFING', logo: null },
+            hero: { title: 'Your Trusted Renovation & Repair Partner', subtitle: 'JH One Stop Services - 25 Years of Reliable Experience', background: null },
+            about: { subtitle: '25 Years of Reliable Expertise', text: 'Looking for a trustworthy contractor for your renovation or repair needs? With over 25 years of hands-on experience, JH One Stop Services offers a complete range of renovation and construction solutions for residential, commercial, and industrial properties across the Klang Valley.', image: null },
+            services: [
+                { title: 'General Renovation & Construction:', items: ['Roofing installation & repair', 'Tiling work', 'House extensions', 'Ceiling repair & installation', 'Painting services', 'PU injection & waterproofing'] },
+                { title: 'Home System Services:', items: ['Plumbing & water pipe solutions', 'Electrical wiring', 'Air conditioning service & repair'] },
+                { title: 'Leak & Clog Specialists:', items: ['Water pipe blockages', 'Toilet leakages', 'All types of roofing leaks'] }
+            ],
+            servicesDescription: 'We offer a wide range of renovation, construction, and repair services—all under one roof. Whether it\'s a minor repair or a major upgrade, our team is equipped to handle it with precision and care.',
+            features: [
+                { title: 'Over 25 Years of Experience', text: 'We\'ve built a solid reputation for quality workmanship and fast problem-solving.', icon: '✓' },
+                { title: 'Specialists in Leak Detection & Repairs', text: 'Our most requested services are toilet and roofing leakage repairs—done right the first time.', icon: '✓' },
+                { title: 'One-Stop Convenience', text: 'No more juggling different contractors. From plumbing to painting—we do it all.', icon: '✓' },
+                { title: 'Wide Coverage', text: 'We proudly serve Selangor, Kuala Lumpur, and the entire Klang Valley area.', icon: '✓' }
+            ],
+            gallery: [
+                { image: null }, { image: null }, { image: null }, { image: null },
+                { image: null }, { image: null }, { image: null }, { image: null },
+                { image: null }, { image: null }, { image: null }, { image: null },
+                { image: null }, { image: null }, { image: null }, { image: null }
+            ],
+            galleryDescription: 'Take a look at some of our completed projects to see the quality of our workmanship and the wide range of services we provide. From roofing and tiling to plumbing and waterproofing, every job is handled with precision and care.',
+            clients: [
+                { title: 'Homeowners', icon: '🏠' },
+                { title: 'Office & Shopplot Owners', icon: '🏢' },
+                { title: 'Property Managers', icon: '🔑' },
+                { title: 'Industrial Clients', icon: '🏭' }
+            ],
+            coverage: [
+                { title: 'Selangor', image: null },
+                { title: 'Kuala Lumpur', image: null }
+            ],
+            contact: { address: 'KS 6A, 1st Floor Evergreen, Jalan Klang Lama, Batu 4 1/2, 58100 Kuala Lumpur.', phone: '+6016-2806373', email: 'jhonetopservices@gmail.com', image: null }
+        };
+
+        // Load data from localStorage
+        function loadData() {
+            const saved = localStorage.getItem('siteData');
+            if (saved) {
+                siteData = JSON.parse(saved);
+            }
+            renderAllContent();
+        }
+
+        // Save data to localStorage
+        function saveDataToStorage() {
+            localStorage.setItem('siteData', JSON.stringify(siteData));
+        }
+
+        // Render all content on page load
+        function renderAllContent() {
+            // Logo
+            document.getElementById('companyName').textContent = siteData.company.name;
+            document.getElementById('companySubtitle').textContent = siteData.company.subtitle;
+            if (siteData.company.logo) {
+                document.getElementById('logoImage').style.backgroundImage = `url(${siteData.company.logo})`;
+            }
+
+            // Hero
+            document.getElementById('heroTitle').textContent = siteData.hero.title;
+            document.getElementById('heroSubtitle').textContent = siteData.hero.subtitle;
+            if (siteData.hero.background) {
+                document.getElementById('heroSection').style.backgroundImage = `url(${siteData.hero.background})`;
+            }
+
+            // About
+            document.querySelector('#about h3').textContent = siteData.about.subtitle;
+            document.getElementById('aboutText').textContent = siteData.about.text;
+            if (siteData.about.image) {
+                document.getElementById('aboutImage').style.backgroundImage = `url(${siteData.about.image})`;
+            }
+
+            // Services
+            document.getElementById('servicesDescription').textContent = siteData.servicesDescription;
+            const servicesGrid = document.getElementById('servicesGrid');
+            servicesGrid.innerHTML = siteData.services.map((service, idx) => `
+                <div class="service-card">
+                    <h3>${service.title}</h3>
+                    <ul>
+                        ${service.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('');
+
+            // Features
+            const featuresGrid = document.getElementById('featuresGrid');
+            featuresGrid.innerHTML = siteData.features.map((feature, idx) => `
+                <div class="feature-box">
+                    <div class="feature-icon">${feature.icon}</div>
+                    <h3>${feature.title}</h3>
+                    <p>${feature.text}</p>
+                </div>
+            `).join('');
+
+            // Gallery
+            document.getElementById('galleryDescription').textContent = siteData.galleryDescription;
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryGrid.innerHTML = siteData.gallery.map((item, idx) => `
+                <div class="gallery-item" style="background-image: url('${item.image || ''}');">
+                    ${!item.image ? '<div class="gallery-placeholder">📷</div>' : ''}
+                </div>
+            `).join('');
+
+            // Clients
+            const clientsGrid = document.getElementById('clientsGrid');
+            clientsGrid.innerHTML = siteData.clients.map((client, idx) => `
+                <div class="client-box">
+                    <div class="client-icon">${client.icon}</div>
+                    <h3>${client.title}</h3>
+                </div>
+            `).join('');
+
+            // Coverage
+            const coverageGrid = document.getElementById('coverageGrid');
+            coverageGrid.innerHTML = siteData.coverage.map((item, idx) => `
+                <div class="coverage-item">
+                    <div class="coverage-image" style="background-image: url('${item.image || ''}');"></div>
+                    <h3>${item.title}</h3>
+                </div>
+            `).join('');
+
+            // Contact
+            document.getElementById('contactAddress').textContent = siteData.contact.address;
+            document.getElementById('contactPhone').textContent = siteData.contact.phone;
+            document.getElementById('contactEmail').textContent = siteData.contact.email;
+            if (siteData.contact.image) {
+                document.getElementById('contactImage').style.backgroundImage = `url(${siteData.contact.image})`;
+            }
+        }
+
+        // Admin Panel Functions
         let clickCount = 0;
         let clickTimer;
 
-        document.querySelector('.admin-trigger').addEventListener('click', function() {
+        function handleAdminTrigger() {
             clickCount++;
-            
             clearTimeout(clickTimer);
-            clickTimer = setTimeout(() => {
-                clickCount = 0;
-            }, 2000);
+            clickTimer = setTimeout(() => { clickCount = 0; }, 2000);
 
             if (clickCount === 5) {
                 clickCount = 0;
                 const password = prompt('Enter admin password:');
                 if (password === '123iin456') {
                     document.getElementById('adminPanel').classList.add('active');
-                    loadAdminContent();
+                    loadAdminPanel();
                 } else {
                     alert('Invalid password!');
                 }
             }
-        });
+        }
 
         function closeAdmin() {
             document.getElementById('adminPanel').classList.remove('active');
         }
 
         function switchTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.admin-tab').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show selected tab
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
         }
 
-        function loadAdminContent() {
-            document.getElementById('adminCompanyName').value = document.getElementById('companyName').textContent;
-            document.getElementById('adminFooterText').value = document.getElementById('footerText').textContent;
-            document.getElementById('adminHeroTitle').value = document.getElementById('heroTitle').textContent;
-            document.getElementById('adminHeroSubtitle').value = document.getElementById('heroSubtitle').textContent;
-            document.getElementById('adminAboutSubtitle').value = document.querySelector('#about h3').textContent;
-            document.getElementById('adminAboutText').value = document.getElementById('aboutText').textContent;
-            document.getElementById('adminServicesDescription').value = document.getElementById('servicesDescription').textContent;
-            document.getElementById('adminServiceList1').value = Array.from(document.getElementById('serviceList1').children).map(li => li.textContent).join('\n');
-            document.getElementById('adminServiceList2').value = Array.from(document.getElementById('serviceList2').children).map(li => li.textContent).join('\n');
-            document.getElementById('adminLeakSpecialistText').value = document.getElementById('leakSpecialistText').textContent;
-            document.getElementById('adminGalleryDescription').value = document.getElementById('galleryDescription').textContent;
-            document.getElementById('adminContactAddress').value = document.getElementById('contactAddress').textContent;
-            document.getElementById('adminContactPhone').value = document.getElementById('contactPhone').textContent;
-            document.getElementById('adminContactEmail').value = document.getElementById('contactEmail').textContent;
+        // Image handling
+        function handleImageUpload(input, callback) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    callback(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
-        function saveCompany() {
-            document.getElementById('companyName').textContent = document.getElementById('adminCompanyName').value;
-            document.getElementById('footerText').textContent = '© 2025 ' + document.getElementById('adminCompanyName').value + '. All rights reserved.';
-            alert('Company information saved!');
+        function previewLogoImage(event) {
+            handleImageUpload(event.target, (dataUrl) => {
+                document.getElementById('logoImagePreview').src = dataUrl;
+                document.getElementById('logoImagePreview').classList.add('show');
+                siteData.company.logo = dataUrl;
+            });
+        }
+
+        function previewHeroImage(event) {
+            handleImageUpload(event.target, (dataUrl) => {
+                document.getElementById('heroImagePreview').src = dataUrl;
+                document.getElementById('heroImagePreview').classList.add('show');
+                siteData.hero.background = dataUrl;
+            });
+        }
+
+        function previewAboutImage(event) {
+            handleImageUpload(event.target, (dataUrl) => {
+                document.getElementById('aboutImagePreview').src = dataUrl;
+                document.getElementById('aboutImagePreview').classList.add('show');
+                siteData.about.image = dataUrl;
+            });
+        }
+
+        function previewContactImage(event) {
+            handleImageUpload(event.target, (dataUrl) => {
+                document.getElementById('contactImagePreview').src = dataUrl;
+                document.getElementById('contactImagePreview').classList.add('show');
+                siteData.contact.image = dataUrl;
+            });
+        }
+
+        // Load admin panel content
+        function loadAdminPanel() {
+            document.getElementById('adminCompanyName').value = siteData.company.name;
+            document.getElementById('adminCompanySubtitle').value = siteData.company.subtitle;
+            document.getElementById('adminHeroTitle').value = siteData.hero.title;
+            document.getElementById('adminHeroSubtitle').value = siteData.hero.subtitle;
+            document.getElementById('adminAboutSubtitle').value = siteData.about.subtitle;
+            document.getElementById('adminAboutText').value = siteData.about.text;
+            document.getElementById('adminServicesDescription').value = siteData.servicesDescription;
+            document.getElementById('adminGalleryDescription').value = siteData.galleryDescription;
+            document.getElementById('adminContactAddress').value = siteData.contact.address;
+            document.getElementById('adminContactPhone').value = siteData.contact.phone;
+            document.getElementById('adminContactEmail').value = siteData.contact.email;
+
+            // Load services edit
+            const servicesContainer = document.getElementById('servicesEditContainer');
+            servicesContainer.innerHTML = siteData.services.map((service, idx) => `
+                <div class="service-item-edit">
+                    <div class="service-item-header">Service Box ${idx + 1}: ${service.title}</div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" value="${service.title}" onchange="siteData.services[${idx}].title = this.value">
+                    </div>
+                    <div class="form-group">
+                        <label>Items (one per line)</label>
+                        <textarea onchange="siteData.services[${idx}].items = this.value.split('\\n').filter(i => i.trim())">${service.items.join('\n')}</textarea>
+                    </div>
+                </div>
+            `).join('');
+
+            // Load features edit
+            const featuresContainer = document.getElementById('featuresEditContainer');
+            featuresContainer.innerHTML = siteData.features.map((feature, idx) => `
+                <div class="service-item-edit">
+                    <div class="service-item-header">Feature ${idx + 1}</div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" value="${feature.title}" onchange="siteData.features[${idx}].title = this.value">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea onchange="siteData.features[${idx}].text = this.value">${feature.text}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Icon (emoji or text)</label>
+                        <input type="text" value="${feature.icon}" onchange="siteData.features[${idx}].icon = this.value" placeholder="e.g., ✓, ⭐, 🎯">
+                    </div>
+                </div>
+            `).join('');
+
+            // Load gallery edit
+            const galleryContainer = document.getElementById('galleryEditContainer');
+            galleryContainer.innerHTML = siteData.gallery.map((item, idx) => `
+                <div class="gallery-item-edit">
+                    <div class="service-item-header">Gallery Image ${idx + 1}</div>
+                    <div class="form-group">
+                        <label>Upload Image</label>
+                        <div class="image-upload" onclick="document.getElementById('galleryImageInput${idx}').click()">
+                            <p>Click to upload image</p>
+                            <input type="file" id="galleryImageInput${idx}" accept="image/*" onchange="handleGalleryImageUpload(${idx}, event)">
+                        </div>
+                        <div class="gallery-preview" id="galleryPreview${idx}" ${item.image ? `style="background-image: url('${item.image}');"` : ''}></div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Load clients edit
+            const clientsContainer = document.getElementById('clientsEditContainer');
+            clientsContainer.innerHTML = siteData.clients.map((client, idx) => `
+                <div class="service-item-edit">
+                    <div class="service-item-header">Client Type ${idx + 1}</div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" value="${client.title}" onchange="siteData.clients[${idx}].title = this.value">
+                    </div>
+                    <div class="form-group">
+                        <label>Icon (emoji)</label>
+                        <input type="text" value="${client.icon}" onchange="siteData.clients[${idx}].icon = this.value" placeholder="e.g., 🏠">
+                    </div>
+                </div>
+            `).join('');
+
+            // Load coverage edit
+            const coverageContainer = document.getElementById('coverageEditContainer');
+            coverageContainer.innerHTML = siteData.coverage.map((item, idx) => `
+                <div class="service-item-edit">
+                    <div class="service-item-header">${item.title}</div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" value="${item.title}" onchange="siteData.coverage[${idx}].title = this.value">
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <div class="image-upload" onclick="document.getElementById('coverageImageInput${idx}').click()">
+                            <p>Click to upload image</p>
+                            <input type="file" id="coverageImageInput${idx}" accept="image/*" onchange="handleCoverageImageUpload(${idx}, event)">
+                        </div>
+                        <div class="gallery-preview" id="coveragePreview${idx}" ${item.image ? `style="background-image: url('${item.image}');"` : ''}></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleGalleryImageUpload(idx, event) {
+            handleImageUpload(event.target, (dataUrl) => {
+                siteData.gallery[idx].image = dataUrl;
+                document.getElementById(`galleryPreview${idx}`).style.backgroundImage = `url(${dataUrl})`;
+            });
+        }
+
+        function handleCoverageImageUpload(idx, event) {
+            handleImageUpload(event.target, (dataUrl) => {
+                siteData.coverage[idx].image = dataUrl;
+                document.getElementById(`coveragePreview${idx}`).style.backgroundImage = `url(${dataUrl})`;
+            });
+        }
+
+        // Save functions
+        function saveLogo() {
+            siteData.company.name = document.getElementById('adminCompanyName').value;
+            siteData.company.subtitle = document.getElementById('adminCompanySubtitle').value;
+            saveDataToStorage();
+            renderAllContent();
+            alert('Logo updated!');
         }
 
         function saveHero() {
-            document.getElementById('heroTitle').textContent = document.getElementById('adminHeroTitle').value;
-            document.getElementById('heroSubtitle').textContent = document.getElementById('adminHeroSubtitle').value;
-            alert('Hero section saved!');
+            siteData.hero.title = document.getElementById('adminHeroTitle').value;
+            siteData.hero.subtitle = document.getElementById('adminHeroSubtitle').value;
+            saveDataToStorage();
+            renderAllContent();
+            alert('Hero section updated!');
         }
 
         function saveAbout() {
-            document.querySelector('#about h3').textContent = document.getElementById('adminAboutSubtitle').value;
-            document.getElementById('aboutText').textContent = document.getElementById('adminAboutText').value;
-            alert('About section saved!');
+            siteData.about.subtitle = document.getElementById('adminAboutSubtitle').value;
+            siteData.about.text = document.getElementById('adminAboutText').value;
+            saveDataToStorage();
+            renderAllContent();
+            alert('About section updated!');
         }
 
         function saveServices() {
-            document.getElementById('servicesDescription').textContent = document.getElementById('adminServicesDescription').value;
-            
-            const list1Items = document.getElementById('adminServiceList1').value.split('\n').filter(item => item.trim());
-            const serviceList1 = document.getElementById('serviceList1');
-            serviceList1.innerHTML = list1Items.map(item => `<li>${item}</li>`).join('');
-            
-            const list2Items = document.getElementById('adminServiceList2').value.split('\n').filter(item => item.trim());
-            const serviceList2 = document.getElementById('serviceList2');
-            serviceList2.innerHTML = list2Items.map(item => `<li>${item}</li>`).join('');
-            
-            document.getElementById('leakSpecialistText').textContent = document.getElementById('adminLeakSpecialistText').value;
-            alert('Services section saved!');
+            siteData.servicesDescription = document.getElementById('adminServicesDescription').value;
+            saveDataToStorage();
+            renderAllContent();
+            alert('Services updated!');
         }
 
         function saveFeatures() {
-            document.getElementById('galleryDescription').textContent = document.getElementById('adminGalleryDescription').value;
-            alert('Features saved!');
+            saveDataToStorage();
+            renderAllContent();
+            alert('Features updated!');
+        }
+
+        function saveGallery() {
+            siteData.galleryDescription = document.getElementById('adminGalleryDescription').value;
+            saveDataToStorage();
+            renderAllContent();
+            alert('Gallery updated!');
+        }
+
+        function addGalleryImage() {
+            if (siteData.gallery.length < 16) {
+                siteData.gallery.push({ image: null });
+                loadAdminPanel();
+            } else {
+                alert('Maximum 16 images allowed!');
+            }
+        }
+
+        function saveClients() {
+            saveDataToStorage();
+            renderAllContent();
+            alert('Clients updated!');
+        }
+
+        function saveCoverage() {
+            saveDataToStorage();
+            renderAllContent();
+            alert('Coverage updated!');
         }
 
         function saveContact() {
-            document.getElementById('contactAddress').textContent = document.getElementById('adminContactAddress').value;
-            document.getElementById('contactPhone').textContent = document.getElementById('adminContactPhone').value;
-            document.getElementById('contactEmail').textContent = document.getElementById('adminContactEmail').value;
-            alert('Contact information saved!');
+            siteData.contact.address = document.getElementById('adminContactAddress').value;
+            siteData.contact.phone = document.getElementById('adminContactPhone').value;
+            siteData.contact.email = document.getElementById('adminContactEmail').value;
+            saveDataToStorage();
+            renderAllContent();
+            alert('Contact updated!');
         }
 
         function saveTheme() {
+            saveDataToStorage();
             alert('Theme saved!');
         }
 
         function setColor(color, variable) {
             document.documentElement.style.setProperty(variable, color);
-            
-            // Update visual indicator
             event.target.classList.add('selected');
             event.target.parentElement.querySelectorAll('.color-option').forEach(opt => {
                 if (opt !== event.target) opt.classList.remove('selected');
@@ -1116,6 +1481,11 @@
             if (e.target === this) {
                 closeAdmin();
             }
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            loadData();
         });
     </script>
 </body>
