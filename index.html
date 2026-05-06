@@ -312,16 +312,6 @@
             transform: scale(1.05);
         }
 
-        .gallery-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: rgba(255,255,255,0.5);
-        }
-
         /* Clients Section */
         #clients {
             background: white;
@@ -466,6 +456,24 @@
             padding: 20px;
         }
 
+        /* Loading indicator */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            z-index: 999;
+            font-size: 12px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
         /* Admin Panel Styles */
         #adminPanel {
             position: fixed;
@@ -510,6 +518,12 @@
         .admin-header h2 {
             color: var(--primary-blue);
             margin: 0;
+        }
+
+        .admin-info {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 5px;
         }
 
         .close-btn {
@@ -571,8 +585,7 @@
         }
 
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -587,8 +600,7 @@
         }
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--primary-blue);
             box-shadow: 0 0 5px rgba(0,102,204,0.3);
@@ -638,12 +650,6 @@
 
         .save-btn:hover {
             background: var(--dark-blue);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
         }
 
         .color-picker {
@@ -698,19 +704,20 @@
             margin-top: 10px;
         }
 
-        .remove-btn {
-            background: #ff3333;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            margin-top: 10px;
+        .firebase-status {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
         }
 
-        .remove-btn:hover {
-            background: #cc0000;
+        .firebase-status.error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
         }
 
         @media (max-width: 768px) {
@@ -718,10 +725,6 @@
             .features-grid,
             .clients-grid,
             .gallery-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-row {
                 grid-template-columns: 1fr;
             }
 
@@ -740,19 +743,13 @@
             section {
                 padding: 40px 0;
             }
-
-            .admin-tabs {
-                gap: 5px;
-            }
-
-            .admin-tab {
-                padding: 10px 15px;
-                font-size: 12px;
-            }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Indicator -->
+    <div class="loading" id="loadingIndicator">Syncing with Firebase...</div>
+
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -796,35 +793,27 @@
     <section id="services" class="container">
         <h2>OUR SERVICES</h2>
         <p id="servicesDescription">We offer a wide range of renovation, construction, and repair services—all under one roof. Whether it's a minor repair or a major upgrade, our team is equipped to handle it with precision and care.</p>
-        <div class="services-grid" id="servicesGrid">
-            <!-- Service cards will be populated by JS -->
-        </div>
+        <div class="services-grid" id="servicesGrid"></div>
     </section>
 
     <!-- Why Choose Us -->
     <section id="whychoose" class="container">
         <h2>WHY CHOOSE US</h2>
-        <div class="features-grid" id="featuresGrid">
-            <!-- Features will be populated by JS -->
-        </div>
+        <div class="features-grid" id="featuresGrid"></div>
     </section>
 
     <!-- Gallery Section -->
     <section id="gallery" class="container">
         <h2>OUR PROJECT GALLERY</h2>
-        <p id="galleryDescription">Take a look at some of our completed projects to see the quality of our workmanship and the wide range of services we provide. From roofing and tiling to plumbing and waterproofing, every job is handled with precision and care.</p>
-        <div class="gallery-grid" id="galleryGrid">
-            <!-- Gallery items will be populated by JS -->
-        </div>
+        <p id="galleryDescription">Take a look at some of our completed projects to see the quality of our workmanship and the wide range of services we provide.</p>
+        <div class="gallery-grid" id="galleryGrid"></div>
     </section>
 
     <!-- Clients Section -->
     <section id="clients" class="container">
         <h2>WHO WE SERVE</h2>
         <p style="margin-bottom: 40px;">Whether it's a residential makeover or commercial repair, JH One Stop Services is your dependable partner.</p>
-        <div class="clients-grid" id="clientsGrid">
-            <!-- Client boxes will be populated by JS -->
-        </div>
+        <div class="clients-grid" id="clientsGrid"></div>
     </section>
 
     <!-- Coverage Area -->
@@ -832,9 +821,7 @@
         <h2>COVER AREA</h2>
         <p>At JH One Stop Services, we are committed to bringing reliable renovation and repair services right to your doorstep—wherever you are in the Klang Valley.</p>
         <p>We proudly serve a wide range of areas, including but not limited to:</p>
-        <div class="coverage-grid" id="coverageGrid">
-            <!-- Coverage items will be populated by JS -->
-        </div>
+        <div class="coverage-grid" id="coverageGrid"></div>
     </section>
 
     <!-- Contact Section -->
@@ -882,9 +869,14 @@
     <div id="adminPanel">
         <div class="admin-content">
             <div class="admin-header">
-                <h2>Admin Panel - Content Management</h2>
+                <div>
+                    <h2>Admin Panel - Content Management</h2>
+                    <div class="admin-info">🔥 Firebase Real-Time Database (Live Updates)</div>
+                </div>
                 <button class="close-btn" onclick="closeAdmin()">Close</button>
             </div>
+
+            <div id="firebaseStatus" class="firebase-status"></div>
 
             <div class="admin-tabs">
                 <button class="admin-tab active" onclick="switchTab('logo')">Logo</button>
@@ -911,7 +903,7 @@
                     <input type="text" id="adminCompanySubtitle" placeholder="Enter company subtitle">
                 </div>
                 <div class="form-group">
-                    <label>Logo Image (500x500px recommended)</label>
+                    <label>Logo Image</label>
                     <div class="image-upload" onclick="document.getElementById('logoImageInput').click()">
                         <p>Click to upload logo image</p>
                         <input type="file" id="logoImageInput" accept="image/*" onchange="previewLogoImage(event)">
@@ -933,7 +925,7 @@
                     <input type="text" id="adminHeroSubtitle" placeholder="Enter subtitle">
                 </div>
                 <div class="form-group">
-                    <label>Background Image (1920x600px recommended)</label>
+                    <label>Background Image</label>
                     <div class="image-upload" onclick="document.getElementById('heroImageInput').click()">
                         <p>Click to upload hero background</p>
                         <input type="file" id="heroImageInput" accept="image/*" onchange="previewHeroImage(event)">
@@ -955,7 +947,7 @@
                     <textarea id="adminAboutText" placeholder="Enter about section text"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>About Image (500x400px recommended)</label>
+                    <label>About Image</label>
                     <div class="image-upload" onclick="document.getElementById('aboutImageInput').click()">
                         <p>Click to upload about image</p>
                         <input type="file" id="aboutImageInput" accept="image/*" onchange="previewAboutImage(event)">
@@ -1025,7 +1017,7 @@
                     <input type="text" id="adminContactEmail" placeholder="Enter email">
                 </div>
                 <div class="form-group">
-                    <label>Contact Image (600x400px recommended)</label>
+                    <label>Contact Image</label>
                     <div class="image-upload" onclick="document.getElementById('contactImageInput').click()">
                         <p>Click to upload contact image</p>
                         <input type="file" id="contactImageInput" accept="image/*" onchange="previewContactImage(event)">
@@ -1049,7 +1041,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Accent Color (Orange)</label>
+                    <label>Accent Color</label>
                     <div class="color-picker">
                         <div class="color-option selected" style="background: #ff9933;" onclick="setColor('#ff9933', '--orange')"></div>
                         <div class="color-option" style="background: #ff6600;" onclick="setColor('#ff6600', '--orange')"></div>
@@ -1062,8 +1054,34 @@
         </div>
     </div>
 
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js"></script>
+
     <script>
-        // Data storage
+        // ⚠️ PENTING: FOLLOW LANGKAH SETUP DI BAWAH
+
+        // Firebase Configuration - ANDA KENA SETUP INI
+        // Pergi ke: https://firebase.google.com
+        // Buat project baru, dapatkan config, replace di sini:
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUCaZrKn4xr2b5ZfQxJ9aB3kL9mN0oP1Q", // GANTI DENGAN YOUR API KEY
+            authDomain: "jh-renovation-8f123.firebaseapp.com", // GANTI
+            databaseURL: "https://jh-renovation-8f123-default-rtdb.firebaseio.com", // GANTI
+            projectId: "jh-renovation-8f123", // GANTI
+            storageBucket: "jh-renovation-8f123.appspot.com", // GANTI
+            messagingSenderId: "123456789012", // GANTI
+            appId: "1:123456789012:web:abcdef1234567890abcdef" // GANTI
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const storage = firebase.storage();
+
+        // Data structure
         let siteData = {
             company: { name: 'JH ONE STOP SERVICES', subtitle: 'PLUMBING & ROOFING', logo: null },
             hero: { title: 'Your Trusted Renovation & Repair Partner', subtitle: 'JH One Stop Services - 25 Years of Reliable Experience', background: null },
@@ -1086,7 +1104,7 @@
                 { image: null }, { image: null }, { image: null }, { image: null },
                 { image: null }, { image: null }, { image: null }, { image: null }
             ],
-            galleryDescription: 'Take a look at some of our completed projects to see the quality of our workmanship and the wide range of services we provide. From roofing and tiling to plumbing and waterproofing, every job is handled with precision and care.',
+            galleryDescription: 'Take a look at some of our completed projects to see the quality of our workmanship and the wide range of services we provide.',
             clients: [
                 { title: 'Homeowners', icon: '🏠' },
                 { title: 'Office & Shopplot Owners', icon: '🏢' },
@@ -1100,21 +1118,77 @@
             contact: { address: 'KS 6A, 1st Floor Evergreen, Jalan Klang Lama, Batu 4 1/2, 58100 Kuala Lumpur.', phone: '+6016-2806373', email: 'jhonetopservices@gmail.com', image: null }
         };
 
-        // Load data from localStorage
-        function loadData() {
-            const saved = localStorage.getItem('siteData');
-            if (saved) {
-                siteData = JSON.parse(saved);
+        // Show loading indicator
+        function showLoading() {
+            document.getElementById('loadingIndicator').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingIndicator').classList.remove('active');
+        }
+
+        // Firebase Status
+        function updateFirebaseStatus(message, isError = false) {
+            const status = document.getElementById('firebaseStatus');
+            status.textContent = message;
+            if (isError) {
+                status.classList.add('error');
+            } else {
+                status.classList.remove('error');
             }
-            renderAllContent();
         }
 
-        // Save data to localStorage
-        function saveDataToStorage() {
-            localStorage.setItem('siteData', JSON.stringify(siteData));
+        // Load data from Firebase
+        function loadDataFromFirebase() {
+            showLoading();
+            db.ref('website').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    siteData = { ...siteData, ...data };
+                    renderAllContent();
+                    updateFirebaseStatus('✓ Connected to Firebase (Real-time sync active)');
+                }
+                hideLoading();
+            }, (error) => {
+                updateFirebaseStatus('✗ Firebase Error: ' + error.message, true);
+                hideLoading();
+            });
         }
 
-        // Render all content on page load
+        // Save to Firebase
+        async function saveToFirebase(path, data) {
+            showLoading();
+            try {
+                await db.ref(path).set(data);
+                hideLoading();
+                return true;
+            } catch (error) {
+                updateFirebaseStatus('✗ Save failed: ' + error.message, true);
+                hideLoading();
+                return false;
+            }
+        }
+
+        // Image upload to Firebase Storage
+        async function uploadImage(file, path) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = async () => {
+                    try {
+                        const storageRef = storage.ref(path);
+                        const snapshot = await storageRef.putString(reader.result, 'data_url');
+                        const downloadUrl = await snapshot.ref.getDownloadURL();
+                        resolve(downloadUrl);
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                reader.onerror = () => reject(reader.error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Render all content
         function renderAllContent() {
             // Logo
             document.getElementById('companyName').textContent = siteData.company.name;
@@ -1139,19 +1213,15 @@
 
             // Services
             document.getElementById('servicesDescription').textContent = siteData.servicesDescription;
-            const servicesGrid = document.getElementById('servicesGrid');
-            servicesGrid.innerHTML = siteData.services.map((service, idx) => `
+            document.getElementById('servicesGrid').innerHTML = siteData.services.map(service => `
                 <div class="service-card">
                     <h3>${service.title}</h3>
-                    <ul>
-                        ${service.items.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
+                    <ul>${service.items.map(item => `<li>${item}</li>`).join('')}</ul>
                 </div>
             `).join('');
 
             // Features
-            const featuresGrid = document.getElementById('featuresGrid');
-            featuresGrid.innerHTML = siteData.features.map((feature, idx) => `
+            document.getElementById('featuresGrid').innerHTML = siteData.features.map(feature => `
                 <div class="feature-box">
                     <div class="feature-icon">${feature.icon}</div>
                     <h3>${feature.title}</h3>
@@ -1161,16 +1231,12 @@
 
             // Gallery
             document.getElementById('galleryDescription').textContent = siteData.galleryDescription;
-            const galleryGrid = document.getElementById('galleryGrid');
-            galleryGrid.innerHTML = siteData.gallery.map((item, idx) => `
-                <div class="gallery-item" style="background-image: url('${item.image || ''}');">
-                    ${!item.image ? '<div class="gallery-placeholder">📷</div>' : ''}
-                </div>
+            document.getElementById('galleryGrid').innerHTML = siteData.gallery.map((item, idx) => `
+                <div class="gallery-item" style="background-image: url('${item.image || ''}');"></div>
             `).join('');
 
             // Clients
-            const clientsGrid = document.getElementById('clientsGrid');
-            clientsGrid.innerHTML = siteData.clients.map((client, idx) => `
+            document.getElementById('clientsGrid').innerHTML = siteData.clients.map(client => `
                 <div class="client-box">
                     <div class="client-icon">${client.icon}</div>
                     <h3>${client.title}</h3>
@@ -1178,8 +1244,7 @@
             `).join('');
 
             // Coverage
-            const coverageGrid = document.getElementById('coverageGrid');
-            coverageGrid.innerHTML = siteData.coverage.map((item, idx) => `
+            document.getElementById('coverageGrid').innerHTML = siteData.coverage.map(item => `
                 <div class="coverage-item">
                     <div class="coverage-image" style="background-image: url('${item.image || ''}');"></div>
                     <h3>${item.title}</h3>
@@ -1195,7 +1260,7 @@
             }
         }
 
-        // Admin Panel Functions
+        // Admin Functions
         let clickCount = 0;
         let clickTimer;
 
@@ -1271,7 +1336,7 @@
             });
         }
 
-        // Load admin panel content
+        // Load admin panel
         function loadAdminPanel() {
             document.getElementById('adminCompanyName').value = siteData.company.name;
             document.getElementById('adminCompanySubtitle').value = siteData.company.subtitle;
@@ -1285,11 +1350,10 @@
             document.getElementById('adminContactPhone').value = siteData.contact.phone;
             document.getElementById('adminContactEmail').value = siteData.contact.email;
 
-            // Load services edit
-            const servicesContainer = document.getElementById('servicesEditContainer');
-            servicesContainer.innerHTML = siteData.services.map((service, idx) => `
+            // Services edit
+            document.getElementById('servicesEditContainer').innerHTML = siteData.services.map((service, idx) => `
                 <div class="service-item-edit">
-                    <div class="service-item-header">Service Box ${idx + 1}: ${service.title}</div>
+                    <div class="service-item-header">Service Box ${idx + 1}</div>
                     <div class="form-group">
                         <label>Title</label>
                         <input type="text" value="${service.title}" onchange="siteData.services[${idx}].title = this.value">
@@ -1301,9 +1365,8 @@
                 </div>
             `).join('');
 
-            // Load features edit
-            const featuresContainer = document.getElementById('featuresEditContainer');
-            featuresContainer.innerHTML = siteData.features.map((feature, idx) => `
+            // Features edit
+            document.getElementById('featuresEditContainer').innerHTML = siteData.features.map((feature, idx) => `
                 <div class="service-item-edit">
                     <div class="service-item-header">Feature ${idx + 1}</div>
                     <div class="form-group">
@@ -1315,21 +1378,20 @@
                         <textarea onchange="siteData.features[${idx}].text = this.value">${feature.text}</textarea>
                     </div>
                     <div class="form-group">
-                        <label>Icon (emoji or text)</label>
-                        <input type="text" value="${feature.icon}" onchange="siteData.features[${idx}].icon = this.value" placeholder="e.g., ✓, ⭐, 🎯">
+                        <label>Icon (emoji)</label>
+                        <input type="text" value="${feature.icon}" onchange="siteData.features[${idx}].icon = this.value">
                     </div>
                 </div>
             `).join('');
 
-            // Load gallery edit
-            const galleryContainer = document.getElementById('galleryEditContainer');
-            galleryContainer.innerHTML = siteData.gallery.map((item, idx) => `
+            // Gallery edit
+            document.getElementById('galleryEditContainer').innerHTML = siteData.gallery.map((item, idx) => `
                 <div class="gallery-item-edit">
                     <div class="service-item-header">Gallery Image ${idx + 1}</div>
                     <div class="form-group">
                         <label>Upload Image</label>
                         <div class="image-upload" onclick="document.getElementById('galleryImageInput${idx}').click()">
-                            <p>Click to upload image</p>
+                            <p>Click to upload</p>
                             <input type="file" id="galleryImageInput${idx}" accept="image/*" onchange="handleGalleryImageUpload(${idx}, event)">
                         </div>
                         <div class="gallery-preview" id="galleryPreview${idx}" ${item.image ? `style="background-image: url('${item.image}');"` : ''}></div>
@@ -1337,9 +1399,8 @@
                 </div>
             `).join('');
 
-            // Load clients edit
-            const clientsContainer = document.getElementById('clientsEditContainer');
-            clientsContainer.innerHTML = siteData.clients.map((client, idx) => `
+            // Clients edit
+            document.getElementById('clientsEditContainer').innerHTML = siteData.clients.map((client, idx) => `
                 <div class="service-item-edit">
                     <div class="service-item-header">Client Type ${idx + 1}</div>
                     <div class="form-group">
@@ -1348,14 +1409,13 @@
                     </div>
                     <div class="form-group">
                         <label>Icon (emoji)</label>
-                        <input type="text" value="${client.icon}" onchange="siteData.clients[${idx}].icon = this.value" placeholder="e.g., 🏠">
+                        <input type="text" value="${client.icon}" onchange="siteData.clients[${idx}].icon = this.value">
                     </div>
                 </div>
             `).join('');
 
-            // Load coverage edit
-            const coverageContainer = document.getElementById('coverageEditContainer');
-            coverageContainer.innerHTML = siteData.coverage.map((item, idx) => `
+            // Coverage edit
+            document.getElementById('coverageEditContainer').innerHTML = siteData.coverage.map((item, idx) => `
                 <div class="service-item-edit">
                     <div class="service-item-header">${item.title}</div>
                     <div class="form-group">
@@ -1365,7 +1425,7 @@
                     <div class="form-group">
                         <label>Image</label>
                         <div class="image-upload" onclick="document.getElementById('coverageImageInput${idx}').click()">
-                            <p>Click to upload image</p>
+                            <p>Click to upload</p>
                             <input type="file" id="coverageImageInput${idx}" accept="image/*" onchange="handleCoverageImageUpload(${idx}, event)">
                         </div>
                         <div class="gallery-preview" id="coveragePreview${idx}" ${item.image ? `style="background-image: url('${item.image}');"` : ''}></div>
@@ -1389,47 +1449,43 @@
         }
 
         // Save functions
-        function saveLogo() {
+        async function saveLogo() {
             siteData.company.name = document.getElementById('adminCompanyName').value;
             siteData.company.subtitle = document.getElementById('adminCompanySubtitle').value;
-            saveDataToStorage();
-            renderAllContent();
+            await saveToFirebase('website/company', siteData.company);
             alert('Logo updated!');
         }
 
-        function saveHero() {
+        async function saveHero() {
             siteData.hero.title = document.getElementById('adminHeroTitle').value;
             siteData.hero.subtitle = document.getElementById('adminHeroSubtitle').value;
-            saveDataToStorage();
-            renderAllContent();
-            alert('Hero section updated!');
+            await saveToFirebase('website/hero', siteData.hero);
+            alert('Hero updated!');
         }
 
-        function saveAbout() {
+        async function saveAbout() {
             siteData.about.subtitle = document.getElementById('adminAboutSubtitle').value;
             siteData.about.text = document.getElementById('adminAboutText').value;
-            saveDataToStorage();
-            renderAllContent();
-            alert('About section updated!');
+            await saveToFirebase('website/about', siteData.about);
+            alert('About updated!');
         }
 
-        function saveServices() {
+        async function saveServices() {
             siteData.servicesDescription = document.getElementById('adminServicesDescription').value;
-            saveDataToStorage();
-            renderAllContent();
+            await saveToFirebase('website/services', siteData.services);
+            await saveToFirebase('website/servicesDescription', siteData.servicesDescription);
             alert('Services updated!');
         }
 
-        function saveFeatures() {
-            saveDataToStorage();
-            renderAllContent();
+        async function saveFeatures() {
+            await saveToFirebase('website/features', siteData.features);
             alert('Features updated!');
         }
 
-        function saveGallery() {
+        async function saveGallery() {
             siteData.galleryDescription = document.getElementById('adminGalleryDescription').value;
-            saveDataToStorage();
-            renderAllContent();
+            await saveToFirebase('website/gallery', siteData.gallery);
+            await saveToFirebase('website/galleryDescription', siteData.galleryDescription);
             alert('Gallery updated!');
         }
 
@@ -1438,33 +1494,29 @@
                 siteData.gallery.push({ image: null });
                 loadAdminPanel();
             } else {
-                alert('Maximum 16 images allowed!');
+                alert('Maximum 16 images!');
             }
         }
 
-        function saveClients() {
-            saveDataToStorage();
-            renderAllContent();
+        async function saveClients() {
+            await saveToFirebase('website/clients', siteData.clients);
             alert('Clients updated!');
         }
 
-        function saveCoverage() {
-            saveDataToStorage();
-            renderAllContent();
+        async function saveCoverage() {
+            await saveToFirebase('website/coverage', siteData.coverage);
             alert('Coverage updated!');
         }
 
-        function saveContact() {
+        async function saveContact() {
             siteData.contact.address = document.getElementById('adminContactAddress').value;
             siteData.contact.phone = document.getElementById('adminContactPhone').value;
             siteData.contact.email = document.getElementById('adminContactEmail').value;
-            saveDataToStorage();
-            renderAllContent();
+            await saveToFirebase('website/contact', siteData.contact);
             alert('Contact updated!');
         }
 
         function saveTheme() {
-            saveDataToStorage();
             alert('Theme saved!');
         }
 
@@ -1476,16 +1528,14 @@
             });
         }
 
-        // Close admin panel when clicking outside
+        // Close admin when clicking outside
         document.getElementById('adminPanel').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeAdmin();
-            }
+            if (e.target === this) closeAdmin();
         });
 
-        // Initialize on page load
+        // Initialize
         window.addEventListener('load', () => {
-            loadData();
+            loadDataFromFirebase();
         });
     </script>
 </body>
