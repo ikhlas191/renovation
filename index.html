@@ -1392,6 +1392,7 @@
 
         function handleAdminTrigger() {
             clickCount++;
+            console.log('Click count:', clickCount);
             clearTimeout(clickTimer);
             clickTimer = setTimeout(() => { clickCount = 0; }, 2000);
 
@@ -1399,8 +1400,16 @@
                 clickCount = 0;
                 const password = prompt('Enter admin password:');
                 if (password === '123iin456') {
-                    document.getElementById('adminPanel').classList.add('active');
-                    loadAdminPanel();
+                    try {
+                        console.log('Opening admin panel...');
+                        document.getElementById('adminPanel').classList.add('active');
+                        loadAdminPanel();
+                        console.log('Admin panel opened successfully');
+                    } catch (error) {
+                        console.error('Admin panel error:', error);
+                        document.getElementById('adminPanel').classList.add('active');
+                        alert('Admin panel opened (some features may not be available)');
+                    }
                 } else {
                     alert('Invalid password!');
                 }
