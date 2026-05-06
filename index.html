@@ -75,6 +75,33 @@
             color: var(--text-light);
         }
 
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
         nav ul {
             display: flex;
             list-style: none;
@@ -91,6 +118,44 @@
 
         nav a:hover {
             color: var(--primary-blue);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            flex-direction: column;
+            padding: 20px;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 99;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--light-blue);
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu .cta-button {
+            width: 100%;
+            text-align: center;
+            padding: 12px 25px;
+            margin: 10px 0 0 0;
         }
 
         .cta-button {
@@ -730,6 +795,39 @@
 
             nav {
                 padding: 0 20px;
+                position: relative;
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .mobile-menu {
+                width: 100%;
+                left: -20px;
+                right: -20px;
+                padding: 20px;
+            }
+
+            .logo-text span {
+                font-size: 10px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .logo-image {
+                width: 40px;
+                height: 40px;
             }
 
             .container {
@@ -743,7 +841,22 @@
             section {
                 padding: 40px 0;
             }
+
+            #about,
+            #contact {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .contact-info {
+                padding-right: 0;
+            }
+
+            .coverage-grid {
+                grid-template-columns: 1fr;
+            }
         }
+    
     </style>
 </head>
 <body>
@@ -768,6 +881,19 @@
                 <li><a href="#clients">WHO WE SERVE</a></li>
                 <li><a href="#contact" class="cta-button">CONTACT US</a></li>
             </ul>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#about" onclick="closeMobileMenu()">ABOUT US</a>
+            <a href="#services" onclick="closeMobileMenu()">OUR SERVICES</a>
+            <a href="#whychoose" onclick="closeMobileMenu()">WHY CHOOSE US</a>
+            <a href="#gallery" onclick="closeMobileMenu()">OUR PROJECT GALLERY</a>
+            <a href="#clients" onclick="closeMobileMenu()">WHO WE SERVE</a>
+            <a href="#contact" class="cta-button" onclick="closeMobileMenu()">CONTACT US</a>
         </div>
     </nav>
 
@@ -1060,26 +1186,57 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js"></script>
 
     <script>
+        // Wait for Firebase to load
+        let firebaseReady = false;
+        let db = null;
+        let storage = null;
+
+        // Check if Firebase is ready
+        function waitForFirebase() {
+            if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+                firebaseReady = true;
+                console.log('Firebase loaded successfully');
+                return true;
+            }
+            return false;
+        }
+
+        // Initialize Firebase when ready
+        function initializeFirebase() {
+            if (!waitForFirebase()) {
+                setTimeout(initializeFirebase, 100);
+                return;
+            }
+
+            try {
+                // Firebase Configuration
+                const firebaseConfig = {
+                    apiKey: "AIzaSyAZgKkqfU0hjAswp_uIOZnd9domROoBqv8",
+                    authDomain: "one-stop-solution-6cc02.firebaseapp.com",
+                    databaseURL: "https://one-stop-solution-6cc02-default-rtdb.asia-southeast1.firebasedatabase.app",
+                    projectId: "one-stop-solution-6cc02",
+                    storageBucket: "one-stop-solution-6cc02.firebasestorage.app",
+                    messagingSenderId: "660109612716",
+                    appId: "1:660109612716:web:10128b2a9e3729cba9b109"
+                };
+
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.database();
+                storage = firebase.storage();
+                
+                console.log('Firebase initialized successfully');
+                firebaseReady = true;
+                
+                // Start loading data
+                loadDataFromFirebase();
+            } catch (error) {
+                console.error('Firebase initialization error:', error);
+                firebaseReady = false;
+            }
+        }
+
         // ⚠️ PENTING: FOLLOW LANGKAH SETUP DI BAWAH
-
-        // Firebase Configuration - ANDA KENA SETUP INI
-        // Pergi ke: https://firebase.google.com
-        // Buat project baru, dapatkan config, replace di sini:
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDUCaZrKn4xr2b5ZfQxJ9aB3kL9mN0oP1Q", // GANTI DENGAN YOUR API KEY
-            authDomain: "jh-renovation-8f123.firebaseapp.com", // GANTI
-            databaseURL: "https://jh-renovation-8f123-default-rtdb.firebaseio.com", // GANTI
-            projectId: "jh-renovation-8f123", // GANTI
-            storageBucket: "jh-renovation-8f123.appspot.com", // GANTI
-            messagingSenderId: "123456789012", // GANTI
-            appId: "1:123456789012:web:abcdef1234567890abcdef" // GANTI
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const storage = firebase.storage();
 
         // Data structure
         let siteData = {
@@ -1140,6 +1297,12 @@
 
         // Load data from Firebase
         function loadDataFromFirebase() {
+            if (!firebaseReady || !db) {
+                console.log('Firebase not ready, retrying...');
+                setTimeout(loadDataFromFirebase, 500);
+                return;
+            }
+            
             showLoading();
             db.ref('website').on('value', (snapshot) => {
                 const data = snapshot.val();
@@ -1157,6 +1320,12 @@
 
         // Save to Firebase
         async function saveToFirebase(path, data) {
+            if (!firebaseReady || !db) {
+                console.warn('Firebase not ready, data saved locally only');
+                alert('Firebase connection not ready. Changes saved locally.');
+                return true;
+            }
+            
             showLoading();
             try {
                 await db.ref(path).set(data);
@@ -1264,8 +1433,26 @@
         let clickCount = 0;
         let clickTimer;
 
+        // Check URL for admin access
+        function checkUrlForAdmin() {
+            const params = new URLSearchParams(window.location.search);
+            const adminKey = params.get('admin');
+            
+            if (adminKey === '123iin456') {
+                console.log('Admin access granted via URL');
+                document.getElementById('adminPanel').classList.add('active');
+                try {
+                    loadAdminPanel();
+                } catch (error) {
+                    console.error('Error loading admin panel:', error);
+                    alert('Admin panel opened');
+                }
+            }
+        }
+
         function handleAdminTrigger() {
             clickCount++;
+            console.log('Click count:', clickCount);
             clearTimeout(clickTimer);
             clickTimer = setTimeout(() => { clickCount = 0; }, 2000);
 
@@ -1273,8 +1460,16 @@
                 clickCount = 0;
                 const password = prompt('Enter admin password:');
                 if (password === '123iin456') {
-                    document.getElementById('adminPanel').classList.add('active');
-                    loadAdminPanel();
+                    try {
+                        console.log('Opening admin panel...');
+                        document.getElementById('adminPanel').classList.add('active');
+                        loadAdminPanel();
+                        console.log('Admin panel opened successfully');
+                    } catch (error) {
+                        console.error('Admin panel error:', error);
+                        document.getElementById('adminPanel').classList.add('active');
+                        alert('Admin panel opened (some features may not be available)');
+                    }
                 } else {
                     alert('Invalid password!');
                 }
@@ -1533,9 +1728,34 @@
             if (e.target === this) closeAdmin();
         });
 
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            if (!nav.contains(event.target)) {
+                closeMobileMenu();
+            }
+        });
+
         // Initialize
         window.addEventListener('load', () => {
-            loadDataFromFirebase();
+            initializeFirebase();
+            // Check if admin access via URL
+            checkUrlForAdmin();
         });
     </script>
 </body>
