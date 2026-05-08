@@ -8,9 +8,30 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- FIREBASE SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+  <!-- FIREBASE SDK - Module Version -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAZgKkqfU0hjAswp_uIOZnd9domR0oBqv8",
+      authDomain: "one-stop-solution-6cc02.firebaseapp.com",
+      databaseURL: "https://one-stop-solution-6cc02-default-rtdb.asia-southeast1.firebaseio.com",
+      projectId: "one-stop-solution-6cc02",
+      storageBucket: "one-stop-solution-6cc02.appspot.com",
+      messagingSenderId: "660109612716",
+      appId: "1:660109612716:web:10128b2a9e3729cba9b109"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    window.db = db;
+    window.ref = ref;
+    window.set = set;
+    window.get = get;
+    window.child = child;
+  </script>
 
   <style>
     * {
@@ -1015,45 +1036,6 @@
 <a href="https://wa.me/60162806373" class="whatsapp-float">💬</a>
 
 <script>
-// ============ FIREBASE CONFIG ============
-const firebaseConfig = {
-  apiKey: "AIzaSyAZgKkqfU0hjAswp_uIOZnd9domR0oBqv8",
-  authDomain: "one-stop-solution-6cc02.firebaseapp.com",
-  databaseURL: "https://one-stop-solution-6cc02-default-rtdb.asia-southeast1.firebaseio.com",
-  projectId: "one-stop-solution-6cc02",
-  storageBucket: "one-stop-solution-6cc02.appspot.com",
-  messagingSenderId: "660109612716",
-  appId: "1:660109612716:web:10128b2a9e3729cba9b109"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-// ============ LOGO CLICK ============
-let clickCount = 0;
-let clickTimer;
-
-document.getElementById('logoClick').addEventListener('click', function(e) {
-  e.preventDefault();
-  clickCount++;
-  console.log('Click count:', clickCount);
-  
-  if (clickCount === 5) {
-    const pwd = prompt('🔐 Password:');
-    if (pwd === '123iin456') {
-      openAdmin();
-    } else if (pwd !== null) {
-      alert('❌ Wrong password!');
-    }
-    clickCount = 0;
-  }
-  
-  clearTimeout(clickTimer);
-  clickTimer = setTimeout(() => {
-    clickCount = 0;
-  }, 3000);
-});
-
 // ============ ADMIN FUNCTIONS ============
 function openAdmin() {
   document.getElementById('adminPanel').classList.add('active');
@@ -1078,19 +1060,22 @@ function showSuccess() {
 }
 
 // ============ SAVE FUNCTIONS ============
-function saveHero() {
+async function saveHero() {
   const data = {
     heroTitle: document.getElementById('heroTitle').value,
     heroDesc: document.getElementById('heroDesc').value,
     heroImg: document.getElementById('heroImg').value
   };
-  db.ref('sections/hero').set(data).then(() => {
+  try {
+    await window.set(window.ref(window.db, 'sections/hero'), data);
     updateDisplay();
     showSuccess();
-  });
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
 }
 
-function saveAbout() {
+async function saveAbout() {
   const data = {
     aboutTitle: document.getElementById('aboutTitle').value,
     aboutSubtitle: document.getElementById('aboutSubtitle').value,
@@ -1099,13 +1084,16 @@ function saveAbout() {
     aboutContent2: document.getElementById('aboutContent2').value,
     aboutImg: document.getElementById('aboutImg').value
   };
-  db.ref('sections/about').set(data).then(() => {
+  try {
+    await window.set(window.ref(window.db, 'sections/about'), data);
     updateDisplay();
     showSuccess();
-  });
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
 }
 
-function saveServices() {
+async function saveServices() {
   const data = {
     servicesTitle: document.getElementById('servicesTitle').value,
     servicesSubtitle: document.getElementById('servicesSubtitle').value,
@@ -1119,13 +1107,16 @@ function saveServices() {
     service3Title: document.getElementById('service3Title').value,
     service3Desc: document.getElementById('service3Desc').value
   };
-  db.ref('sections/services').set(data).then(() => {
+  try {
+    await window.set(window.ref(window.db, 'sections/services'), data);
     updateDisplay();
     showSuccess();
-  });
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
 }
 
-function saveStats() {
+async function saveStats() {
   const data = {
     stat1Value: document.getElementById('stat1Value').value,
     stat1Label: document.getElementById('stat1Label').value,
@@ -1136,13 +1127,16 @@ function saveStats() {
     stat4Value: document.getElementById('stat4Value').value,
     stat4Label: document.getElementById('stat4Label').value
   };
-  db.ref('sections/stats').set(data).then(() => {
+  try {
+    await window.set(window.ref(window.db, 'sections/stats'), data);
     updateDisplay();
     showSuccess();
-  });
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
 }
 
-function saveGallery() {
+async function saveGallery() {
   const data = {
     galleryTitle: document.getElementById('galleryTitle').value,
     gallerySubtitle: document.getElementById('gallerySubtitle').value,
@@ -1151,13 +1145,16 @@ function saveGallery() {
     gallery3: document.getElementById('gallery3').value,
     gallery4: document.getElementById('gallery4').value
   };
-  db.ref('sections/gallery').set(data).then(() => {
+  try {
+    await window.set(window.ref(window.db, 'sections/gallery'), data);
     updateDisplay();
     showSuccess();
-  });
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
 }
 
-function saveTestimonials() {
+async function saveTestimonials() {
   const data = {
     testimonialsTitle: document.getElementById('testimonialsTitle').value,
     testimonialsSubtitle: document.getElementById('testimonialsSubtitle').value,
@@ -1168,13 +1165,16 @@ function saveTestimonials() {
     testimonial3Quote: document.getElementById('testimonial3Quote').value,
     testimonial3Author: document.getElementById('testimonial3Author').value
   };
-  db.ref('sections/testimonials').set(data).then(() => {
+  try {
+    await window.set(window.ref(window.db, 'sections/testimonials'), data);
     updateDisplay();
     showSuccess();
-  });
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
 }
 
-function saveContact() {
+async function saveContact() {
   const data = {
     contactTitle: document.getElementById('contactTitle').value,
     contactSubtitle: document.getElementById('contactSubtitle').value,
@@ -1183,15 +1183,19 @@ function saveContact() {
     contactEmail: document.getElementById('contactEmail').value,
     contactHours: document.getElementById('contactHours').value
   };
-  db.ref('sections/contact').set(data).then(() => {
+  try {
+    await window.set(window.ref(window.db, 'sections/contact'), data);
     updateDisplay();
     showSuccess();
-  });
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
 }
 
-// ============ LOAD & UPDATE ============
-function loadAllData() {
-  db.ref('sections').once('value').then(snapshot => {
+// ============ LOAD DATA ============
+async function loadAllData() {
+  try {
+    const snapshot = await window.get(window.child(window.ref(window.db), 'sections'));
     const data = snapshot.val() || {};
     
     if (data.hero) {
@@ -1256,11 +1260,14 @@ function loadAllData() {
       document.getElementById('contactEmail').value = data.contact.contactEmail || '';
       document.getElementById('contactHours').value = data.contact.contactHours || '';
     }
-  });
+  } catch (error) {
+    console.error('Error loading data:', error);
+  }
 }
 
-function updateDisplay() {
-  db.ref('sections').once('value').then(snapshot => {
+async function updateDisplay() {
+  try {
+    const snapshot = await window.get(window.child(window.ref(window.db), 'sections'));
     const data = snapshot.val() || {};
     
     if (data.hero) {
@@ -1327,8 +1334,35 @@ function updateDisplay() {
       document.getElementById('contactEmail2').textContent = data.contact.contactEmail || '';
       document.getElementById('contactHours2').textContent = data.contact.contactHours || '';
     }
-  });
+  } catch (error) {
+    console.error('Error updating display:', error);
+  }
 }
+
+// ============ LOGO CLICK ============
+let clickCount = 0;
+let clickTimer;
+
+document.getElementById('logoClick').addEventListener('click', function(e) {
+  e.preventDefault();
+  clickCount++;
+  console.log('Click count:', clickCount);
+  
+  if (clickCount === 5) {
+    const pwd = prompt('🔐 Password:');
+    if (pwd === '123iin456') {
+      openAdmin();
+    } else if (pwd !== null) {
+      alert('❌ Wrong password!');
+    }
+    clickCount = 0;
+  }
+  
+  clearTimeout(clickTimer);
+  clickTimer = setTimeout(() => {
+    clickCount = 0;
+  }, 3000);
+});
 
 // Load on page load
 window.addEventListener('load', updateDisplay);
