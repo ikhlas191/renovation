@@ -7,7 +7,6 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- FIREBASE SDK - Module Version -->
@@ -27,22 +26,16 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-
     window.db = db;
     window.ref = ref;
     window.set = set;
     window.get = get;
     window.child = child;
+    console.log('Firebase OK');
   </script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
     :root {
       --primary: #0A66C2;
       --secondary: #004182;
@@ -53,511 +46,81 @@
       --white: #ffffff;
       --shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #fff;
-      color: var(--dark);
-      overflow-x: hidden;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 1400px;
-      margin: auto;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      backdrop-filter: blur(15px);
-      background: rgba(255,255,255,0.9);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.05);
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 0;
-    }
-
-    .logo {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--primary);
-      cursor: pointer;
-      user-select: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
-
-    .logo:hover {
-      background: rgba(10, 102, 194, 0.1);
-    }
-
-    .logo span {
-      color: var(--accent);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 30px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--dark);
-      font-weight: 500;
-      transition: 0.3s;
-    }
-
-    .nav-links a:hover {
-      color: var(--primary);
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--secondary);
-      transform: translateY(-3px);
-    }
-
-    .btn-whatsapp {
-      background: #25D366;
-      color: white;
-    }
-
-    .hero {
-      min-height: 100vh;
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: center;
-      color: white;
-      text-align: center;
-      position: relative;
-      margin-top: 80px;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 1;
-    }
-
-    .hero-content {
-      max-width: 900px;
-      margin: auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero h1 {
-      font-size: 64px;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-
-    .hero p {
-      font-size: 22px;
-      margin-bottom: 40px;
-      color: #e5e7eb;
-    }
-
-    .hero-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    section {
-      padding: 100px 0;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 60px;
-    }
-
-    .section-title h2 {
-      font-size: 42px;
-      margin-bottom: 15px;
-      color: var(--primary);
-    }
-
-    .section-title p {
-      color: var(--gray);
-      max-width: 700px;
-      margin: auto;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .about-image img {
-      width: 100%;
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    .about-content h3 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-
-    .about-content p {
-      color: var(--gray);
-      line-height: 1.8;
-      margin-bottom: 20px;
-    }
-
-    .services {
-      background: var(--light);
-    }
-
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-
-    .service-card {
-      background: white;
-      padding: 40px 30px;
-      border-radius: 20px;
-      transition: 0.4s;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-    }
-
-    .service-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-    }
-
-    .service-icon {
-      width: 70px;
-      height: 70px;
-      background: var(--primary);
-      color: white;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      margin-bottom: 25px;
-    }
-
-    .service-card h3 {
-      margin-bottom: 15px;
-      font-size: 24px;
-    }
-
-    .service-card p {
-      color: var(--gray);
-      line-height: 1.8;
-    }
-
-    .stats {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 30px;
-      text-align: center;
-    }
-
-    .stat-box h2 {
-      font-size: 56px;
-      margin-bottom: 10px;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .gallery-grid img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      border-radius: 18px;
-      transition: 0.4s;
-    }
-
-    .gallery-grid img:hover {
-      transform: scale(1.03);
-    }
-
-    .testimonial {
-      background: var(--light);
-    }
-
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-
-    .testimonial-card {
-      background: white;
-      padding: 35px;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-    }
-
-    .testimonial-card p {
-      color: var(--gray);
-      line-height: 1.8;
-      margin-bottom: 20px;
-    }
-
-    .testimonial-card h4 {
-      color: var(--primary);
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px;
-    }
-
-    .contact-info {
-      background: var(--primary);
-      color: white;
-      padding: 50px;
-      border-radius: 20px;
-    }
-
-    .contact-info h3 {
-      margin-bottom: 25px;
-      font-size: 32px;
-    }
-
-    .contact-info p {
-      margin-bottom: 15px;
-      line-height: 1.8;
-    }
-
-    .contact-form {
-      background: white;
-      padding: 50px;
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 16px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      font-family: inherit;
-    }
-
-    .form-group textarea {
-      min-height: 150px;
-      resize: none;
-    }
-
-    footer {
-      background: var(--dark);
-      color: white;
-      text-align: center;
-      padding: 30px 0;
-    }
-
-    .whatsapp-float {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 65px;
-      height: 65px;
-      background: #25D366;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 34px;
-      text-decoration: none;
-      z-index: 999;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-
-    /* ADMIN PANEL */
-    .admin-panel {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.95);
-      z-index: 2000;
-      overflow-y: auto;
-    }
-
-    .admin-panel.active {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .admin-content {
-      max-width: 1200px;
-      width: 100%;
-      margin: auto;
-      padding: 40px 20px;
-      background: white;
-      border-radius: 15px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-      background: var(--primary);
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    .admin-header h2 {
-      margin: 0;
-    }
-
-    .close-btn {
-      background: red;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .admin-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .admin-tab {
-      padding: 10px 20px;
-      background: #e5e7eb;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    .admin-tab.active {
-      background: var(--primary);
-      color: white;
-    }
-
-    .admin-section {
-      display: none;
-    }
-
-    .admin-section.active {
-      display: block;
-    }
-
-    .admin-form-group {
-      margin-bottom: 20px;
-    }
-
-    .admin-form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: var(--dark);
-    }
-
-    .admin-form-group input,
-    .admin-form-group textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 14px;
-    }
-
-    .admin-form-group textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .admin-btn {
-      background: var(--primary);
-      color: white;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-
-    .admin-btn:hover {
-      background: var(--secondary);
-    }
-
-    .save-success {
-      background: #10b981;
-      color: white;
-      padding: 15px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      display: none;
-    }
-
-    .save-success.show {
-      display: block;
-    }
-
+    body { font-family: 'Poppins', sans-serif; background: #fff; color: var(--dark); overflow-x: hidden; }
+    .container { width: 90%; max-width: 1400px; margin: auto; }
+    header { position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(15px); background: rgba(255,255,255,0.9); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; }
+    .logo { font-size: 26px; font-weight: 700; color: var(--primary); cursor: pointer; user-select: none; padding: 10px 20px; border-radius: 8px; transition: 0.3s; }
+    .logo:hover { background: rgba(10, 102, 194, 0.1); }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; transition: 0.3s; }
+    .nav-links a:hover { color: var(--primary); }
+    .btn { display: inline-block; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.3s; border: none; cursor: pointer; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--secondary); transform: translateY(-3px); }
+    .btn-whatsapp { background: #25D366; color: white; }
+    .hero { min-height: 100vh; background-size: cover; background-position: center; display: flex; align-items: center; color: white; text-align: center; position: relative; margin-top: 80px; }
+    .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1; }
+    .hero-content { max-width: 900px; margin: auto; position: relative; z-index: 2; }
+    .hero h1 { font-size: 64px; line-height: 1.1; margin-bottom: 20px; }
+    .hero p { font-size: 22px; margin-bottom: 40px; color: #e5e7eb; }
+    .hero-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    section { padding: 100px 0; }
+    .section-title { text-align: center; margin-bottom: 60px; }
+    .section-title h2 { font-size: 42px; margin-bottom: 15px; color: var(--primary); }
+    .section-title p { color: var(--gray); max-width: 700px; margin: auto; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .about-image img { width: 100%; border-radius: 20px; box-shadow: var(--shadow); }
+    .about-content h3 { font-size: 36px; margin-bottom: 20px; }
+    .about-content p { color: var(--gray); line-height: 1.8; margin-bottom: 20px; }
+    .services { background: var(--light); }
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .service-card { background: white; padding: 40px 30px; border-radius: 20px; transition: 0.4s; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+    .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    .service-icon { width: 70px; height: 70px; background: var(--primary); color: white; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 25px; }
+    .service-card h3 { margin-bottom: 15px; font-size: 24px; }
+    .service-card p { color: var(--gray); line-height: 1.8; }
+    .stats { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; text-align: center; }
+    .stat-box h2 { font-size: 56px; margin-bottom: 10px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .gallery-grid img { width: 100%; height: 300px; object-fit: cover; border-radius: 18px; transition: 0.4s; }
+    .gallery-grid img:hover { transform: scale(1.03); }
+    .testimonial { background: var(--light); }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .testimonial-card { background: white; padding: 35px; border-radius: 18px; box-shadow: var(--shadow); }
+    .testimonial-card p { color: var(--gray); line-height: 1.8; margin-bottom: 20px; }
+    .testimonial-card h4 { color: var(--primary); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+    .contact-info { background: var(--primary); color: white; padding: 50px; border-radius: 20px; }
+    .contact-info h3 { margin-bottom: 25px; font-size: 32px; }
+    .contact-info p { margin-bottom: 15px; line-height: 1.8; }
+    .contact-form { background: white; padding: 50px; border-radius: 20px; box-shadow: var(--shadow); }
+    .form-group { margin-bottom: 20px; }
+    .form-group input, .form-group textarea { width: 100%; padding: 16px; border: 1px solid #ddd; border-radius: 12px; font-family: inherit; }
+    .form-group textarea { min-height: 150px; resize: none; }
+    footer { background: var(--dark); color: white; text-align: center; padding: 30px 0; }
+    .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 34px; text-decoration: none; z-index: 999; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .admin-panel { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; }
+    .admin-panel.active { display: flex; flex-direction: column; }
+    .admin-content { max-width: 1200px; width: 100%; margin: auto; padding: 40px 20px; background: white; border-radius: 15px; margin-top: 20px; margin-bottom: 20px; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: var(--primary); color: white; padding: 20px; border-radius: 10px; }
+    .admin-header h2 { margin: 0; }
+    .close-btn { background: red; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .admin-tab { padding: 10px 20px; background: #e5e7eb; border: none; border-radius: 5px; cursor: pointer; font-weight: 500; }
+    .admin-tab.active { background: var(--primary); color: white; }
+    .admin-section { display: none; }
+    .admin-section.active { display: block; }
+    .admin-form-group { margin-bottom: 20px; }
+    .admin-form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark); }
+    .admin-form-group input, .admin-form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 14px; }
+    .admin-form-group textarea { min-height: 100px; resize: vertical; }
+    .admin-btn { background: var(--primary); color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+    .admin-btn:hover { background: var(--secondary); }
+    .save-success { background: #10b981; color: white; padding: 15px; border-radius: 5px; margin-bottom: 20px; display: none; }
+    .save-success.show { display: block; }
     @media(max-width: 768px) {
       .hero h1 { font-size: 42px; }
       .hero p { font-size: 18px; }
@@ -575,17 +138,13 @@
 <header>
   <div class="container">
     <nav>
-      <div class="logo" id="logoClick">
-        I.K 19 <span>Solution</span>
-      </div>
-
+      <div class="logo" id="logoClick">I.K 19 <span>Solution</span></div>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-
       <a href="https://wa.me/60182246616" class="btn btn-primary">Get Quote</a>
     </nav>
   </div>
@@ -602,270 +161,37 @@
     <div class="save-success" id="saveSuccess">✓ Perubahan telah disimpan ke Firebase!</div>
 
     <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchTab('hero', this)">1. Hero</button>
-      <button class="admin-tab" onclick="switchTab('about', this)">2. About</button>
-      <button class="admin-tab" onclick="switchTab('services', this)">3. Services</button>
-      <button class="admin-tab" onclick="switchTab('stats', this)">4. Stats</button>
-      <button class="admin-tab" onclick="switchTab('gallery', this)">5. Gallery</button>
-      <button class="admin-tab" onclick="switchTab('testimonials', this)">6. Testimonials</button>
-      <button class="admin-tab" onclick="switchTab('contact', this)">7. Contact</button>
-    </div>
-
-    <!-- HERO -->
-    <div class="admin-section active" id="heroSection">
-      <h3>Edit Hero Section</h3>
-      <div class="admin-form-group">
-        <label>Title:</label>
-        <input type="text" id="heroTitle" placeholder="Tajuk hero">
-      </div>
-      <div class="admin-form-group">
-        <label>Description:</label>
-        <textarea id="heroDesc" placeholder="Deskripsi hero"></textarea>
-      </div>
-      <div class="admin-form-group">
-        <label>Background Image URL:</label>
-        <input type="text" id="heroImg" placeholder="https://...">
-      </div>
-      <button class="admin-btn" onclick="saveHero()">Save Hero Section</button>
-    </div>
-
-    <!-- ABOUT -->
-    <div class="admin-section" id="aboutSection">
-      <h3>Edit About Section</h3>
-      <div class="admin-form-group">
-        <label>Title:</label>
-        <input type="text" id="aboutTitle">
-      </div>
-      <div class="admin-form-group">
-        <label>Subtitle:</label>
-        <input type="text" id="aboutSubtitle">
-      </div>
-      <div class="admin-form-group">
-        <label>Heading:</label>
-        <input type="text" id="aboutHeading">
-      </div>
-      <div class="admin-form-group">
-        <label>Content (Paragraph 1):</label>
-        <textarea id="aboutContent1"></textarea>
-      </div>
-      <div class="admin-form-group">
-        <label>Content (Paragraph 2):</label>
-        <textarea id="aboutContent2"></textarea>
-      </div>
-      <div class="admin-form-group">
-        <label>Image URL:</label>
-        <input type="text" id="aboutImg">
-      </div>
-      <button class="admin-btn" onclick="saveAbout()">Save About Section</button>
-    </div>
-
-    <!-- SERVICES -->
-    <div class="admin-section" id="servicesSection">
-      <h3>Edit Services Section</h3>
-      <div class="admin-form-group">
-        <label>Title:</label>
-        <input type="text" id="servicesTitle">
-      </div>
-      <div class="admin-form-group">
-        <label>Subtitle:</label>
-        <input type="text" id="servicesSubtitle">
-      </div>
-
-      <h4 style="margin-top: 30px; margin-bottom: 20px;">Service 1</h4>
-      <div class="admin-form-group">
-        <label>Icon (emoji):</label>
-        <input type="text" id="service1Icon" maxlength="2">
-      </div>
-      <div class="admin-form-group">
-        <label>Title:</label>
-        <input type="text" id="service1Title">
-      </div>
-      <div class="admin-form-group">
-        <label>Description:</label>
-        <textarea id="service1Desc"></textarea>
-      </div>
-
-      <h4 style="margin-top: 30px; margin-bottom: 20px;">Service 2</h4>
-      <div class="admin-form-group">
-        <label>Icon (emoji):</label>
-        <input type="text" id="service2Icon" maxlength="2">
-      </div>
-      <div class="admin-form-group">
-        <label>Title:</label>
-        <input type="text" id="service2Title">
-      </div>
-      <div class="admin-form-group">
-        <label>Description:</label>
-        <textarea id="service2Desc"></textarea>
-      </div>
-
-      <h4 style="margin-top: 30px; margin-bottom: 20px;">Service 3</h4>
-      <div class="admin-form-group">
-        <label>Icon (emoji):</label>
-        <input type="text" id="service3Icon" maxlength="2">
-      </div>
-      <div class="admin-form-group">
-        <label>Title:</label>
-        <input type="text" id="service3Title">
-      </div>
-      <div class="admin-form-group">
-        <label>Description:</label>
-        <textarea id="service3Desc"></textarea>
-      </div>
-
-      <button class="admin-btn" onclick="saveServices()">Save Services Section</button>
-    </div>
-
-    <!-- STATS -->
-    <div class="admin-section" id="statsSection">
-      <h3>Edit Stats Section</h3>
-
-      <h4 style="margin-bottom: 20px;">Stat 1</h4>
-      <div class="admin-form-group">
-        <label>Value:</label>
-        <input type="text" id="stat1Value">
-      </div>
-      <div class="admin-form-group">
-        <label>Label:</label>
-        <input type="text" id="stat1Label">
-      </div>
-
-      <h4 style="margin-top: 30px; margin-bottom: 20px;">Stat 2</h4>
-      <div class="admin-form-group">
-        <label>Value:</label>
-        <input type="text" id="stat2Value">
-      </div>
-      <div class="admin-form-group">
-        <label>Label:</label>
-        <input type="text" id="stat2Label">
-      </div>
-
-      <h4 style="margin-top: 30px; margin-bottom: 20px;">Stat 3</h4>
-      <div class="admin-form-group">
-        <label>Value:</label>
-        <input type="text" id="stat3Value">
-      </div>
-      <div class="admin-form-group">
-        <label>Label:</label>
-        <input type="text" id="stat3Label">
-      </div>
-
-      <h4 style="margin-top: 30px; margin-bottom: 20px;">Stat 4</h4>
-      <div class="admin-form-group">
-        <label>Value:</label>
-        <input type="text" id="stat4Value">
-      </div>
-      <div class="admin-form-group">
-        <label>Label:</label>
-        <input type="text" id="stat4Label">
-      </div>
-
-      <button class="admin-btn" onclick="saveStats()">Save Stats Section</button>
+      <button class="admin-tab active" onclick="switchTab('gallery', this)">Gallery</button>
     </div>
 
     <!-- GALLERY -->
-    <div class="admin-section" id="gallerySection">
-      <h3>Edit Gallery Section</h3>
-      <div class="admin-form-group">
-        <label>Title:</label>
-        <input type="text" id="galleryTitle">
-      </div>
-      <div class="admin-form-group">
-        <label>Subtitle:</label>
-        <input type="text" id="gallerySubtitle">
-      </div>
+    <div class="admin-section active" id="gallerySection">
+      <h3>Edit Gallery (6 Images)</h3>
       <div class="admin-form-group">
         <label>Image 1 URL:</label>
-        <input type="text" id="gallery1">
+        <input type="text" id="gallery1" placeholder="https://...">
       </div>
       <div class="admin-form-group">
         <label>Image 2 URL:</label>
-        <input type="text" id="gallery2">
+        <input type="text" id="gallery2" placeholder="https://...">
       </div>
       <div class="admin-form-group">
         <label>Image 3 URL:</label>
-        <input type="text" id="gallery3">
+        <input type="text" id="gallery3" placeholder="https://...">
       </div>
       <div class="admin-form-group">
         <label>Image 4 URL:</label>
-        <input type="text" id="gallery4">
-      </div>
-      <button class="admin-btn" onclick="saveGallery()">Save Gallery Section</button>
-    </div>
-
-    <!-- TESTIMONIALS -->
-    <div class="admin-section" id="testimonialsSection">
-      <h3>Edit Testimonials Section</h3>
-      <div class="admin-form-group">
-        <label>Title:</label>
-        <input type="text" id="testimonialsTitle">
+        <input type="text" id="gallery4" placeholder="https://...">
       </div>
       <div class="admin-form-group">
-        <label>Subtitle:</label>
-        <input type="text" id="testimonialsSubtitle">
-      </div>
-
-      <h4 style="margin-top: 30px; margin-bottom: 20px;">Testimonial 1</h4>
-      <div class="admin-form-group">
-        <label>Quote:</label>
-        <textarea id="testimonial1Quote"></textarea>
+        <label>Image 5 URL:</label>
+        <input type="text" id="gallery5" placeholder="https://...">
       </div>
       <div class="admin-form-group">
-        <label>Author:</label>
-        <input type="text" id="testimonial1Author">
+        <label>Image 6 URL:</label>
+        <input type="text" id="gallery6" placeholder="https://...">
       </div>
-
-      <h4 style="margin-top: 30px; margin-bottom: 20px;">Testimonial 2</h4>
-      <div class="admin-form-group">
-        <label>Quote:</label>
-        <textarea id="testimonial2Quote"></textarea>
-      </div>
-      <div class="admin-form-group">
-        <label>Author:</label>
-        <input type="text" id="testimonial2Author">
-      </div>
-
-      <h4 style="margin-top: 30px; margin-bottom: 20px;">Testimonial 3</h4>
-      <div class="admin-form-group">
-        <label>Quote:</label>
-        <textarea id="testimonial3Quote"></textarea>
-      </div>
-      <div class="admin-form-group">
-        <label>Author:</label>
-        <input type="text" id="testimonial3Author">
-      </div>
-
-      <button class="admin-btn" onclick="saveTestimonials()">Save Testimonials Section</button>
-    </div>
-
-    <!-- CONTACT -->
-    <div class="admin-section" id="contactSection">
-      <h3>Edit Contact Section</h3>
-      <div class="admin-form-group">
-        <label>Title:</label>
-        <input type="text" id="contactTitle">
-      </div>
-      <div class="admin-form-group">
-        <label>Subtitle:</label>
-        <input type="text" id="contactSubtitle">
-      </div>
-      <div class="admin-form-group">
-        <label>Address:</label>
-        <textarea id="contactAddress" style="min-height: 80px;"></textarea>
-      </div>
-      <div class="admin-form-group">
-        <label>Phone (Hotline):</label>
-        <input type="text" id="contactPhone">
-      </div>
-      <div class="admin-form-group">
-        <label>Email:</label>
-        <input type="text" id="contactEmail">
-      </div>
-      <div class="admin-form-group">
-        <label>Working Hours:</label>
-        <input type="text" id="contactHours">
-      </div>
-      <button class="admin-btn" onclick="saveContact()">Save Contact Section</button>
+      <button class="admin-btn" onclick="saveGallery()">Save Gallery</button>
     </div>
   </div>
 </div>
@@ -874,8 +200,8 @@
 <section class="hero" id="heroSection2">
   <div class="container">
     <div class="hero-content">
-      <h1 id="heroTitle2">Professional Electrical, Renovation & Network Installation Services</h1>
-      <p id="heroDesc2">Trusted electrical wiring, renovation and network cabling solutions with more than 10 years of experience across Kuala Lumpur & Selangor.</p>
+      <h1>Professional Electrical, Renovation & Network Installation Services</h1>
+      <p>Trusted electrical wiring, renovation and network cabling solutions with more than 10 years of experience across Kuala Lumpur & Selangor.</p>
       <div class="hero-buttons">
         <a href="#contact" class="btn btn-primary">Request Quotation</a>
         <a href="https://wa.me/60182246616" class="btn btn-whatsapp">WhatsApp Us</a>
@@ -888,19 +214,17 @@
 <section id="about">
   <div class="container">
     <div class="section-title">
-      <h2 id="aboutTitle2">About Our Company</h2>
-      <p id="aboutSubtitle2">Your trusted one-stop technical and renovation solution provider.</p>
+      <h2>About Our Company</h2>
+      <p>Your trusted one-stop technical and renovation solution provider.</p>
     </div>
-
     <div class="about-grid">
       <div class="about-image">
-        <img id="aboutImg2" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200" alt="Construction">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200" alt="Construction">
       </div>
-
       <div class="about-content">
-        <h3 id="aboutHeading2">10 Years Of Industry Experience</h3>
-        <p id="aboutContent1_2">I.K 19 One Stop Solution provides professional electrical wiring, renovation and structured network cabling services for residential, office and commercial projects.</p>
-        <p id="aboutContent2_2">We focus on quality workmanship, safety standards and reliable support to ensure every project is completed efficiently and professionally.</p>
+        <h3>10 Years Of Industry Experience</h3>
+        <p>I.K 19 One Stop Solution provides professional electrical wiring, renovation and structured network cabling services for residential, office and commercial projects.</p>
+        <p>We focus on quality workmanship, safety standards and reliable support to ensure every project is completed efficiently and professionally.</p>
         <a href="#contact" class="btn btn-primary">Contact Us Today</a>
       </div>
     </div>
@@ -911,27 +235,24 @@
 <section class="services" id="services">
   <div class="container">
     <div class="section-title">
-      <h2 id="servicesTitle2">Our Professional Services</h2>
-      <p id="servicesSubtitle2">Complete technical and renovation services for homes and businesses.</p>
+      <h2>Our Professional Services</h2>
+      <p>Complete technical and renovation services for homes and businesses.</p>
     </div>
-
     <div class="service-grid">
       <div class="service-card">
-        <div class="service-icon" id="service1Icon2">⚡</div>
-        <h3 id="service1Title2">Electrical Wiring</h3>
-        <p id="service1Desc2">Professional electrical wiring installation, power point setup, lighting installation and troubleshooting services for residential and commercial properties.</p>
+        <div class="service-icon">⚡</div>
+        <h3>Electrical Wiring</h3>
+        <p>Professional electrical wiring installation, power point setup, lighting installation and troubleshooting services.</p>
       </div>
-
       <div class="service-card">
-        <div class="service-icon" id="service2Icon2">🏠</div>
-        <h3 id="service2Title2">Renovation Works</h3>
-        <p id="service2Desc2">Interior and exterior renovation services including painting, partition, ceiling installation, flooring and office renovation works.</p>
+        <div class="service-icon">🏠</div>
+        <h3>Renovation Works</h3>
+        <p>Interior and exterior renovation services including painting, partition, ceiling installation, flooring and office renovation.</p>
       </div>
-
       <div class="service-card">
-        <div class="service-icon" id="service3Icon2">🌐</div>
-        <h3 id="service3Title2">Network Cable Installation</h3>
-        <p id="service3Desc2">LAN cabling, network point installation, router setup, structured cabling and network troubleshooting for offices and business environments.</p>
+        <div class="service-icon">🌐</div>
+        <h3>Network Cable Installation</h3>
+        <p>LAN cabling, network point installation, router setup, structured cabling and network troubleshooting.</p>
       </div>
     </div>
   </div>
@@ -942,23 +263,20 @@
   <div class="container">
     <div class="stats-grid">
       <div class="stat-box">
-        <h2 id="stat1Value2">10+</h2>
-        <p id="stat1Label2">Years Experience</p>
+        <h2>10+</h2>
+        <p>Years Experience</p>
       </div>
-
       <div class="stat-box">
-        <h2 id="stat2Value2">1000+</h2>
-        <p id="stat2Label2">Projects Completed</p>
+        <h2>1000+</h2>
+        <p>Projects Completed</p>
       </div>
-
       <div class="stat-box">
-        <h2 id="stat3Value2">100%</h2>
-        <p id="stat3Label2">Customer Satisfaction</p>
+        <h2>100%</h2>
+        <p>Customer Satisfaction</p>
       </div>
-
       <div class="stat-box">
-        <h2 id="stat4Value2">24/7</h2>
-        <p id="stat4Label2">Support Service</p>
+        <h2>24/7</h2>
+        <p>Support Service</p>
       </div>
     </div>
   </div>
@@ -968,15 +286,16 @@
 <section id="gallery">
   <div class="container">
     <div class="section-title">
-      <h2 id="galleryTitle2">Project Gallery</h2>
-      <p id="gallerySubtitle2">Our recent technical and renovation projects.</p>
+      <h2>Project Gallery</h2>
+      <p>Our recent technical and renovation projects.</p>
     </div>
-
     <div class="gallery-grid">
-      <img id="gallery1_2" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200">
-      <img id="gallery2_2" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200">
-      <img id="gallery3_2" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1200">
-      <img id="gallery4_2" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200">
+      <img id="gallery1_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0026.jpg" alt="Gallery 1">
+      <img id="gallery2_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0030.jpg" alt="Gallery 2">
+      <img id="gallery3_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0031.jpg" alt="Gallery 3">
+      <img id="gallery4_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0036.jpg" alt="Gallery 4">
+      <img id="gallery5_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0035.jpg" alt="Gallery 5">
+      <img id="gallery6_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0041.jpg" alt="Gallery 6">
     </div>
   </div>
 </section>
@@ -985,24 +304,21 @@
 <section class="testimonial">
   <div class="container">
     <div class="section-title">
-      <h2 id="testimonialsTitle2">What Our Customers Say</h2>
-      <p id="testimonialsSubtitle2">Trusted by homeowners and businesses across Malaysia.</p>
+      <h2>What Our Customers Say</h2>
+      <p>Trusted by homeowners and businesses across Malaysia.</p>
     </div>
-
     <div class="testimonial-grid">
       <div class="testimonial-card">
-        <p id="testimonial1Quote2">Excellent electrical installation service with fast response and professional workmanship.</p>
-        <h4 id="testimonial1Author2">— Mr Lim</h4>
+        <p>Excellent electrical installation service with fast response and professional workmanship.</p>
+        <h4>— Mr Lim</h4>
       </div>
-
       <div class="testimonial-card">
-        <p id="testimonial2Quote2">Reliable renovation contractor with good pricing and quality results.</p>
-        <h4 id="testimonial2Author2">— Sarah K.</h4>
+        <p>Reliable renovation contractor with good pricing and quality results.</p>
+        <h4>— Sarah K.</h4>
       </div>
-
       <div class="testimonial-card">
-        <p id="testimonial3Quote2">Professional network cabling installation for our office. Highly recommended.</p>
-        <h4 id="testimonial3Author2">— Ahmad R.</h4>
+        <p>Professional network cabling installation for our office. Highly recommended.</p>
+        <h4>— Ahmad R.</h4>
       </div>
     </div>
   </div>
@@ -1012,26 +328,17 @@
 <section id="contact">
   <div class="container">
     <div class="section-title">
-      <h2 id="contactTitle2">Get In Touch</h2>
-      <p id="contactSubtitle2">Contact us today for consultation and quotation.</p>
+      <h2>Get In Touch</h2>
+      <p>Contact us today for consultation and quotation.</p>
     </div>
-
     <div class="contact-grid">
       <div class="contact-info">
         <h3>Contact Information</h3>
-        <p><strong>📍 Address:</strong><br>
-        <span id="contactAddress2">PW23-1 ONE MON'T KIARA,<br>No. 1 Jalan Kiara,<br>50480 Kuala Lumpur</span></p>
-
-        <p><strong>📞 Hotline:</strong><br>
-        <span id="contactPhone2">+60182246616</span></p>
-
-        <p><strong>✉️ Email:</strong><br>
-        <span id="contactEmail2">Ikhlas.19@gmail.com</span></p>
-
-        <p><strong>🕒 Working Hours:</strong><br>
-        <span id="contactHours2">Monday - Sunday | 8AM - 10PM</span></p>
+        <p><strong>📍 Address:</strong><br>PW23-1 ONE MON'T KIARA,<br>No. 1 Jalan Kiara,<br>50480 Kuala Lumpur</p>
+        <p><strong>📞 Hotline:</strong><br>+60182246616</p>
+        <p><strong>✉️ Email:</strong><br>Ikhlas.19@gmail.com</p>
+        <p><strong>🕒 Working Hours:</strong><br>Monday - Sunday | 8AM - 10PM</p>
       </div>
-
       <div class="contact-form">
         <form>
           <div class="form-group">
@@ -1060,343 +367,101 @@
   </div>
 </footer>
 
-<!-- WHATSAPP -->
 <a href="https://wa.me/60182246616" class="whatsapp-float">💬</a>
 
 <script>
 
-// ================= ADMIN PANEL =================
 function openAdmin() {
   document.getElementById('adminPanel').classList.add('active');
-  loadAllData();
+  loadGallery();
 }
 
 function closeAdmin() {
   document.getElementById('adminPanel').classList.remove('active');
 }
 
-// ================= TAB SWITCH =================
 function switchTab(tabName, el) {
-
-  document.querySelectorAll('.admin-section').forEach(section => {
-    section.classList.remove('active');
-  });
-
-  document.querySelectorAll('.admin-tab').forEach(tab => {
-    tab.classList.remove('active');
-  });
-
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
   document.getElementById(tabName + 'Section').classList.add('active');
-
-  if (el) {
-    el.classList.add('active');
-  }
+  if (el) el.classList.add('active');
 }
 
-// ================= SUCCESS MESSAGE =================
 function showSuccess() {
-
   const msg = document.getElementById('saveSuccess');
-
   msg.classList.add('show');
-
-  setTimeout(() => {
-    msg.classList.remove('show');
-  }, 2000);
+  setTimeout(() => msg.classList.remove('show'), 2000);
 }
 
-// ================= SAVE TO FIREBASE =================
-async function saveData(path, data) {
-
-  try {
-
-    await window.set(
-      window.ref(window.db, path),
-      data
-    );
-
-    await updateDisplay();
-
-    showSuccess();
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert('Error: ' + error.message);
-  }
-}
-
-// ================= SAVE HERO =================
-async function saveHero() {
-
-  const data = {
-    heroTitle: document.getElementById('heroTitle').value,
-    heroDesc: document.getElementById('heroDesc').value,
-    heroImg: document.getElementById('heroImg').value
-  };
-
-  await saveData('ik19/hero', data);
-}
-
-// ================= SAVE ABOUT =================
-async function saveAbout() {
-
-  const data = {
-    aboutTitle: document.getElementById('aboutTitle').value,
-    aboutSubtitle: document.getElementById('aboutSubtitle').value,
-    aboutHeading: document.getElementById('aboutHeading').value,
-    aboutContent1: document.getElementById('aboutContent1').value,
-    aboutContent2: document.getElementById('aboutContent2').value,
-    aboutImg: document.getElementById('aboutImg').value
-  };
-
-  await saveData('ik19/about', data);
-}
-
-// ================= SAVE SERVICES =================
-async function saveServices() {
-
-  const data = {
-    servicesTitle: document.getElementById('servicesTitle').value,
-    servicesSubtitle: document.getElementById('servicesSubtitle').value,
-
-    service1Icon: document.getElementById('service1Icon').value,
-    service1Title: document.getElementById('service1Title').value,
-    service1Desc: document.getElementById('service1Desc').value,
-
-    service2Icon: document.getElementById('service2Icon').value,
-    service2Title: document.getElementById('service2Title').value,
-    service2Desc: document.getElementById('service2Desc').value,
-
-    service3Icon: document.getElementById('service3Icon').value,
-    service3Title: document.getElementById('service3Title').value,
-    service3Desc: document.getElementById('service3Desc').value
-  };
-
-  await saveData('ik19/services', data);
-}
-
-// ================= SAVE STATS =================
-async function saveStats() {
-
-  const data = {
-    stat1Value: document.getElementById('stat1Value').value,
-    stat1Label: document.getElementById('stat1Label').value,
-
-    stat2Value: document.getElementById('stat2Value').value,
-    stat2Label: document.getElementById('stat2Label').value,
-
-    stat3Value: document.getElementById('stat3Value').value,
-    stat3Label: document.getElementById('stat3Label').value,
-
-    stat4Value: document.getElementById('stat4Value').value,
-    stat4Label: document.getElementById('stat4Label').value
-  };
-
-  await saveData('ik19/stats', data);
-}
-
-// ================= SAVE GALLERY =================
 async function saveGallery() {
-
   const data = {
-    galleryTitle: document.getElementById('galleryTitle').value,
-    gallerySubtitle: document.getElementById('gallerySubtitle').value,
-
     gallery1: document.getElementById('gallery1').value,
     gallery2: document.getElementById('gallery2').value,
     gallery3: document.getElementById('gallery3').value,
-    gallery4: document.getElementById('gallery4').value
+    gallery4: document.getElementById('gallery4').value,
+    gallery5: document.getElementById('gallery5').value,
+    gallery6: document.getElementById('gallery6').value
   };
-
-  await saveData('ik19/gallery', data);
-}
-
-// ================= SAVE TESTIMONIAL =================
-async function saveTestimonials() {
-
-  const data = {
-    testimonialsTitle: document.getElementById('testimonialsTitle').value,
-    testimonialsSubtitle: document.getElementById('testimonialsSubtitle').value,
-
-    testimonial1Quote: document.getElementById('testimonial1Quote').value,
-    testimonial1Author: document.getElementById('testimonial1Author').value,
-
-    testimonial2Quote: document.getElementById('testimonial2Quote').value,
-    testimonial2Author: document.getElementById('testimonial2Author').value,
-
-    testimonial3Quote: document.getElementById('testimonial3Quote').value,
-    testimonial3Author: document.getElementById('testimonial3Author').value
-  };
-
-  await saveData('ik19/testimonials', data);
-}
-
-// ================= SAVE CONTACT =================
-async function saveContact() {
-
-  const data = {
-    contactTitle: document.getElementById('contactTitle').value,
-    contactSubtitle: document.getElementById('contactSubtitle').value,
-    contactAddress: document.getElementById('contactAddress').value,
-    contactPhone: document.getElementById('contactPhone').value,
-    contactEmail: document.getElementById('contactEmail').value,
-    contactHours: document.getElementById('contactHours').value
-  };
-
-  await saveData('ik19/contact', data);
-}
-
-// ================= LOAD DATA =================
-async function loadAllData() {
-
+  
   try {
-
-    const snapshot = await window.get(
-      window.child(window.ref(window.db), 'ik19')
-    );
-
-    const data = snapshot.val();
-
-    if (!data) return;
-
-    // HERO
-    if (data.hero) {
-
-      document.getElementById('heroTitle').value =
-        data.hero.heroTitle || '';
-
-      document.getElementById('heroDesc').value =
-        data.hero.heroDesc || '';
-
-      document.getElementById('heroImg').value =
-        data.hero.heroImg || '';
-    }
-
+    await window.set(window.ref(window.db, 'ik19/gallery'), data);
+    updateGalleryDisplay(data);
+    showSuccess();
   } catch (error) {
-
-    console.error(error);
+    console.error('Error:', error);
+    alert('Error saving: ' + error.message);
   }
 }
 
-// ================= UPDATE WEBSITE =================
-async function updateDisplay() {
-
+async function loadGallery() {
   try {
-
-    const snapshot = await window.get(
-      window.child(window.ref(window.db), 'ik19')
-    );
-
-    const data = snapshot.val();
-
-    if (!data) return;
-
-    // HERO
-    if (data.hero) {
-
-      document.getElementById('heroTitle2').innerText =
-        data.hero.heroTitle || '';
-
-      document.getElementById('heroDesc2').innerText =
-        data.hero.heroDesc || '';
-
-      if (data.hero.heroImg) {
-
-        document.getElementById('heroSection2').style.backgroundImage =
-          `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${data.hero.heroImg}')`;
-      }
-    }
-
-    // ABOUT
-    if (data.about) {
-
-      document.getElementById('aboutTitle2').innerText =
-        data.about.aboutTitle || '';
-
-      document.getElementById('aboutSubtitle2').innerText =
-        data.about.aboutSubtitle || '';
-
-      document.getElementById('aboutHeading2').innerText =
-        data.about.aboutHeading || '';
-
-      document.getElementById('aboutContent1_2').innerText =
-        data.about.aboutContent1 || '';
-
-      document.getElementById('aboutContent2_2').innerText =
-        data.about.aboutContent2 || '';
-
-      if (data.about.aboutImg) {
-        document.getElementById('aboutImg2').src =
-          data.about.aboutImg;
-      }
-    }
-
-    // GALLERY
-    if (data.gallery) {
-
-      if (data.gallery.gallery1)
-        document.getElementById('gallery1_2').src =
-          data.gallery.gallery1;
-
-      if (data.gallery.gallery2)
-        document.getElementById('gallery2_2').src =
-          data.gallery.gallery2;
-
-      if (data.gallery.gallery3)
-        document.getElementById('gallery3_2').src =
-          data.gallery.gallery3;
-
-      if (data.gallery.gallery4)
-        document.getElementById('gallery4_2').src =
-          data.gallery.gallery4;
-    }
-
-    console.log('Website Updated');
-
+    const snapshot = await window.get(window.child(window.ref(window.db), 'ik19/gallery'));
+    const data = snapshot.val() || {};
+    
+    document.getElementById('gallery1').value = data.gallery1 || '';
+    document.getElementById('gallery2').value = data.gallery2 || '';
+    document.getElementById('gallery3').value = data.gallery3 || '';
+    document.getElementById('gallery4').value = data.gallery4 || '';
+    document.getElementById('gallery5').value = data.gallery5 || '';
+    document.getElementById('gallery6').value = data.gallery6 || '';
   } catch (error) {
-
-    console.error(error);
+    console.error('Error loading gallery:', error);
   }
 }
 
-// ================= SECRET ADMIN =================
+function updateGalleryDisplay(data) {
+  if (data.gallery1) document.getElementById('gallery1_2').src = data.gallery1;
+  if (data.gallery2) document.getElementById('gallery2_2').src = data.gallery2;
+  if (data.gallery3) document.getElementById('gallery3_2').src = data.gallery3;
+  if (data.gallery4) document.getElementById('gallery4_2').src = data.gallery4;
+  if (data.gallery5) document.getElementById('gallery5_2').src = data.gallery5;
+  if (data.gallery6) document.getElementById('gallery6_2').src = data.gallery6;
+}
+
 let clickCount = 0;
 let clickTimer;
 
 document.getElementById('logoClick').addEventListener('click', function(e) {
-
   e.preventDefault();
-
   clickCount++;
-
+  
   if (clickCount >= 5) {
-
     const pwd = prompt('🔐 Enter Password');
-
     if (pwd === '123iin456') {
-
       openAdmin();
-
     } else if (pwd !== null) {
-
       alert('Wrong Password');
     }
-
     clickCount = 0;
   }
-
+  
   clearTimeout(clickTimer);
-
-  clickTimer = setTimeout(() => {
-    clickCount = 0;
-  }, 3000);
+  clickTimer = setTimeout(() => { clickCount = 0; }, 3000);
 });
 
-// ================= LOAD WEBSITE =================
 window.addEventListener('DOMContentLoaded', () => {
-  updateDisplay();
+  // Load gallery on page load if exists
+  loadGallery();
 });
 
 </script>
