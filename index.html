@@ -1064,7 +1064,8 @@
 <a href="https://wa.me/60182246616" class="whatsapp-float">💬</a>
 
 <script>
-// ============ ADMIN FUNCTIONS ============
+
+// ================= ADMIN PANEL =================
 function openAdmin() {
   document.getElementById('adminPanel').classList.add('active');
   loadAllData();
@@ -1074,36 +1075,73 @@ function closeAdmin() {
   document.getElementById('adminPanel').classList.remove('active');
 }
 
-function switchTab(tabName) {
-  document.querySelectorAll('.admin-section').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.admin-tab').forEach(el => el.classList.remove('active'));
+// ================= TAB SWITCH =================
+function switchTab(tabName, el) {
+
+  document.querySelectorAll('.admin-section').forEach(section => {
+    section.classList.remove('active');
+  });
+
+  document.querySelectorAll('.admin-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+
   document.getElementById(tabName + 'Section').classList.add('active');
-  event.target.classList.add('active');
+
+  if (el) {
+    el.classList.add('active');
+  }
 }
 
+// ================= SUCCESS MESSAGE =================
 function showSuccess() {
+
   const msg = document.getElementById('saveSuccess');
+
   msg.classList.add('show');
-  setTimeout(() => msg.classList.remove('show'), 2000);
+
+  setTimeout(() => {
+    msg.classList.remove('show');
+  }, 2000);
 }
 
-// ============ SAVE FUNCTIONS ============
+// ================= SAVE TO FIREBASE =================
+async function saveData(path, data) {
+
+  try {
+
+    await window.set(
+      window.ref(window.db, path),
+      data
+    );
+
+    await updateDisplay();
+
+    showSuccess();
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert('Error: ' + error.message);
+  }
+}
+
+// ================= SAVE HERO =================
 async function saveHero() {
+
   const data = {
     heroTitle: document.getElementById('heroTitle').value,
     heroDesc: document.getElementById('heroDesc').value,
     heroImg: document.getElementById('heroImg').value
   };
-  try {
-    await window.set(window.ref(window.db, 'ik19/hero'), data);
-    updateDisplay();
-    showSuccess();
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
+
+  await saveData('ik19/hero', data);
 }
 
+// ================= SAVE ABOUT =================
 async function saveAbout() {
+
   const data = {
     aboutTitle: document.getElementById('aboutTitle').value,
     aboutSubtitle: document.getElementById('aboutSubtitle').value,
@@ -1112,97 +1150,92 @@ async function saveAbout() {
     aboutContent2: document.getElementById('aboutContent2').value,
     aboutImg: document.getElementById('aboutImg').value
   };
-  try {
-    await window.set(window.ref(window.db, 'ik19/about'), data);
-    updateDisplay();
-    showSuccess();
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
+
+  await saveData('ik19/about', data);
 }
 
+// ================= SAVE SERVICES =================
 async function saveServices() {
+
   const data = {
     servicesTitle: document.getElementById('servicesTitle').value,
     servicesSubtitle: document.getElementById('servicesSubtitle').value,
+
     service1Icon: document.getElementById('service1Icon').value,
     service1Title: document.getElementById('service1Title').value,
     service1Desc: document.getElementById('service1Desc').value,
+
     service2Icon: document.getElementById('service2Icon').value,
     service2Title: document.getElementById('service2Title').value,
     service2Desc: document.getElementById('service2Desc').value,
+
     service3Icon: document.getElementById('service3Icon').value,
     service3Title: document.getElementById('service3Title').value,
     service3Desc: document.getElementById('service3Desc').value
   };
-  try {
-    await window.set(window.ref(window.db, 'ik19/services'), data);
-    updateDisplay();
-    showSuccess();
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
+
+  await saveData('ik19/services', data);
 }
 
+// ================= SAVE STATS =================
 async function saveStats() {
+
   const data = {
     stat1Value: document.getElementById('stat1Value').value,
     stat1Label: document.getElementById('stat1Label').value,
+
     stat2Value: document.getElementById('stat2Value').value,
     stat2Label: document.getElementById('stat2Label').value,
+
     stat3Value: document.getElementById('stat3Value').value,
     stat3Label: document.getElementById('stat3Label').value,
+
     stat4Value: document.getElementById('stat4Value').value,
     stat4Label: document.getElementById('stat4Label').value
   };
-  try {
-    await window.set(window.ref(window.db, 'ik19/stats'), data);
-    updateDisplay();
-    showSuccess();
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
+
+  await saveData('ik19/stats', data);
 }
 
+// ================= SAVE GALLERY =================
 async function saveGallery() {
+
   const data = {
     galleryTitle: document.getElementById('galleryTitle').value,
     gallerySubtitle: document.getElementById('gallerySubtitle').value,
+
     gallery1: document.getElementById('gallery1').value,
     gallery2: document.getElementById('gallery2').value,
     gallery3: document.getElementById('gallery3').value,
     gallery4: document.getElementById('gallery4').value
   };
-  try {
-    await window.set(window.ref(window.db, 'ik19/gallery'), data);
-    updateDisplay();
-    showSuccess();
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
+
+  await saveData('ik19/gallery', data);
 }
 
+// ================= SAVE TESTIMONIAL =================
 async function saveTestimonials() {
+
   const data = {
     testimonialsTitle: document.getElementById('testimonialsTitle').value,
     testimonialsSubtitle: document.getElementById('testimonialsSubtitle').value,
+
     testimonial1Quote: document.getElementById('testimonial1Quote').value,
     testimonial1Author: document.getElementById('testimonial1Author').value,
+
     testimonial2Quote: document.getElementById('testimonial2Quote').value,
     testimonial2Author: document.getElementById('testimonial2Author').value,
+
     testimonial3Quote: document.getElementById('testimonial3Quote').value,
     testimonial3Author: document.getElementById('testimonial3Author').value
   };
-  try {
-    await window.set(window.ref(window.db, 'ik19/testimonials'), data);
-    updateDisplay();
-    showSuccess();
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
+
+  await saveData('ik19/testimonials', data);
 }
 
+// ================= SAVE CONTACT =================
 async function saveContact() {
+
   const data = {
     contactTitle: document.getElementById('contactTitle').value,
     contactSubtitle: document.getElementById('contactSubtitle').value,
@@ -1211,189 +1244,161 @@ async function saveContact() {
     contactEmail: document.getElementById('contactEmail').value,
     contactHours: document.getElementById('contactHours').value
   };
-  try {
-    await window.set(window.ref(window.db, 'ik19/contact'), data);
-    updateDisplay();
-    showSuccess();
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
+
+  await saveData('ik19/contact', data);
 }
 
-// ============ LOAD DATA ============
+// ================= LOAD DATA =================
 async function loadAllData() {
+
   try {
-    const snapshot = await window.get(window.child(window.ref(window.db), 'ik19'));
-    const data = snapshot.val() || {};
-    
+
+    const snapshot = await window.get(
+      window.child(window.ref(window.db), 'ik19')
+    );
+
+    const data = snapshot.val();
+
+    if (!data) return;
+
+    // HERO
     if (data.hero) {
-      document.getElementById('heroTitle').value = data.hero.heroTitle || '';
-      document.getElementById('heroDesc').value = data.hero.heroDesc || '';
-      document.getElementById('heroImg').value = data.hero.heroImg || '';
+
+      document.getElementById('heroTitle').value =
+        data.hero.heroTitle || '';
+
+      document.getElementById('heroDesc').value =
+        data.hero.heroDesc || '';
+
+      document.getElementById('heroImg').value =
+        data.hero.heroImg || '';
     }
-    if (data.about) {
-      document.getElementById('aboutTitle').value = data.about.aboutTitle || '';
-      document.getElementById('aboutSubtitle').value = data.about.aboutSubtitle || '';
-      document.getElementById('aboutHeading').value = data.about.aboutHeading || '';
-      document.getElementById('aboutContent1').value = data.about.aboutContent1 || '';
-      document.getElementById('aboutContent2').value = data.about.aboutContent2 || '';
-      document.getElementById('aboutImg').value = data.about.aboutImg || '';
-    }
-    if (data.services) {
-      document.getElementById('servicesTitle').value = data.services.servicesTitle || '';
-      document.getElementById('servicesSubtitle').value = data.services.servicesSubtitle || '';
-      document.getElementById('service1Icon').value = data.services.service1Icon || '';
-      document.getElementById('service1Title').value = data.services.service1Title || '';
-      document.getElementById('service1Desc').value = data.services.service1Desc || '';
-      document.getElementById('service2Icon').value = data.services.service2Icon || '';
-      document.getElementById('service2Title').value = data.services.service2Title || '';
-      document.getElementById('service2Desc').value = data.services.service2Desc || '';
-      document.getElementById('service3Icon').value = data.services.service3Icon || '';
-      document.getElementById('service3Title').value = data.services.service3Title || '';
-      document.getElementById('service3Desc').value = data.services.service3Desc || '';
-    }
-    if (data.stats) {
-      document.getElementById('stat1Value').value = data.stats.stat1Value || '';
-      document.getElementById('stat1Label').value = data.stats.stat1Label || '';
-      document.getElementById('stat2Value').value = data.stats.stat2Value || '';
-      document.getElementById('stat2Label').value = data.stats.stat2Label || '';
-      document.getElementById('stat3Value').value = data.stats.stat3Value || '';
-      document.getElementById('stat3Label').value = data.stats.stat3Label || '';
-      document.getElementById('stat4Value').value = data.stats.stat4Value || '';
-      document.getElementById('stat4Label').value = data.stats.stat4Label || '';
-    }
-    if (data.gallery) {
-      document.getElementById('galleryTitle').value = data.gallery.galleryTitle || '';
-      document.getElementById('gallerySubtitle').value = data.gallery.gallerySubtitle || '';
-      document.getElementById('gallery1').value = data.gallery.gallery1 || '';
-      document.getElementById('gallery2').value = data.gallery.gallery2 || '';
-      document.getElementById('gallery3').value = data.gallery.gallery3 || '';
-      document.getElementById('gallery4').value = data.gallery.gallery4 || '';
-    }
-    if (data.testimonials) {
-      document.getElementById('testimonialsTitle').value = data.testimonials.testimonialsTitle || '';
-      document.getElementById('testimonialsSubtitle').value = data.testimonials.testimonialsSubtitle || '';
-      document.getElementById('testimonial1Quote').value = data.testimonials.testimonial1Quote || '';
-      document.getElementById('testimonial1Author').value = data.testimonials.testimonial1Author || '';
-      document.getElementById('testimonial2Quote').value = data.testimonials.testimonial2Quote || '';
-      document.getElementById('testimonial2Author').value = data.testimonials.testimonial2Author || '';
-      document.getElementById('testimonial3Quote').value = data.testimonials.testimonial3Quote || '';
-      document.getElementById('testimonial3Author').value = data.testimonials.testimonial3Author || '';
-    }
-    if (data.contact) {
-      document.getElementById('contactTitle').value = data.contact.contactTitle || '';
-      document.getElementById('contactSubtitle').value = data.contact.contactSubtitle || '';
-      document.getElementById('contactAddress').value = data.contact.contactAddress || '';
-      document.getElementById('contactPhone').value = data.contact.contactPhone || '';
-      document.getElementById('contactEmail').value = data.contact.contactEmail || '';
-      document.getElementById('contactHours').value = data.contact.contactHours || '';
-    }
+
   } catch (error) {
-    console.error('Error loading data:', error);
+
+    console.error(error);
   }
 }
 
+// ================= UPDATE WEBSITE =================
 async function updateDisplay() {
+
   try {
-    const snapshot = await window.get(window.child(window.ref(window.db), 'ik19'));
-    const data = snapshot.val() || {};
-    
+
+    const snapshot = await window.get(
+      window.child(window.ref(window.db), 'ik19')
+    );
+
+    const data = snapshot.val();
+
+    if (!data) return;
+
+    // HERO
     if (data.hero) {
-      document.getElementById('heroTitle2').textContent = data.hero.heroTitle || '';
-      document.getElementById('heroDesc2').textContent = data.hero.heroDesc || '';
+
+      document.getElementById('heroTitle2').innerText =
+        data.hero.heroTitle || '';
+
+      document.getElementById('heroDesc2').innerText =
+        data.hero.heroDesc || '';
+
       if (data.hero.heroImg) {
-        document.getElementById('heroSection2').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${data.hero.heroImg}')`;
+
+        document.getElementById('heroSection2').style.backgroundImage =
+          `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${data.hero.heroImg}')`;
       }
     }
+
+    // ABOUT
     if (data.about) {
-      document.getElementById('aboutTitle2').textContent = data.about.aboutTitle || '';
-      document.getElementById('aboutSubtitle2').textContent = data.about.aboutSubtitle || '';
-      document.getElementById('aboutHeading2').textContent = data.about.aboutHeading || '';
-      document.getElementById('aboutContent1_2').textContent = data.about.aboutContent1 || '';
-      document.getElementById('aboutContent2_2').textContent = data.about.aboutContent2 || '';
-      if (data.about.aboutImg) document.getElementById('aboutImg2').src = data.about.aboutImg;
+
+      document.getElementById('aboutTitle2').innerText =
+        data.about.aboutTitle || '';
+
+      document.getElementById('aboutSubtitle2').innerText =
+        data.about.aboutSubtitle || '';
+
+      document.getElementById('aboutHeading2').innerText =
+        data.about.aboutHeading || '';
+
+      document.getElementById('aboutContent1_2').innerText =
+        data.about.aboutContent1 || '';
+
+      document.getElementById('aboutContent2_2').innerText =
+        data.about.aboutContent2 || '';
+
+      if (data.about.aboutImg) {
+        document.getElementById('aboutImg2').src =
+          data.about.aboutImg;
+      }
     }
-    if (data.services) {
-      document.getElementById('servicesTitle2').textContent = data.services.servicesTitle || '';
-      document.getElementById('servicesSubtitle2').textContent = data.services.servicesSubtitle || '';
-      document.getElementById('service1Icon2').textContent = data.services.service1Icon || '';
-      document.getElementById('service1Title2').textContent = data.services.service1Title || '';
-      document.getElementById('service1Desc2').textContent = data.services.service1Desc || '';
-      document.getElementById('service2Icon2').textContent = data.services.service2Icon || '';
-      document.getElementById('service2Title2').textContent = data.services.service2Title || '';
-      document.getElementById('service2Desc2').textContent = data.services.service2Desc || '';
-      document.getElementById('service3Icon2').textContent = data.services.service3Icon || '';
-      document.getElementById('service3Title2').textContent = data.services.service3Title || '';
-      document.getElementById('service3Desc2').textContent = data.services.service3Desc || '';
-    }
-    if (data.stats) {
-      document.getElementById('stat1Value2').textContent = data.stats.stat1Value || '';
-      document.getElementById('stat1Label2').textContent = data.stats.stat1Label || '';
-      document.getElementById('stat2Value2').textContent = data.stats.stat2Value || '';
-      document.getElementById('stat2Label2').textContent = data.stats.stat2Label || '';
-      document.getElementById('stat3Value2').textContent = data.stats.stat3Value || '';
-      document.getElementById('stat3Label2').textContent = data.stats.stat3Label || '';
-      document.getElementById('stat4Value2').textContent = data.stats.stat4Value || '';
-      document.getElementById('stat4Label2').textContent = data.stats.stat4Label || '';
-    }
+
+    // GALLERY
     if (data.gallery) {
-      document.getElementById('galleryTitle2').textContent = data.gallery.galleryTitle || '';
-      document.getElementById('gallerySubtitle2').textContent = data.gallery.gallerySubtitle || '';
-      document.getElementById('gallery1_2').src = data.gallery.gallery1 || '';
-      document.getElementById('gallery2_2').src = data.gallery.gallery2 || '';
-      document.getElementById('gallery3_2').src = data.gallery.gallery3 || '';
-      document.getElementById('gallery4_2').src = data.gallery.gallery4 || '';
+
+      if (data.gallery.gallery1)
+        document.getElementById('gallery1_2').src =
+          data.gallery.gallery1;
+
+      if (data.gallery.gallery2)
+        document.getElementById('gallery2_2').src =
+          data.gallery.gallery2;
+
+      if (data.gallery.gallery3)
+        document.getElementById('gallery3_2').src =
+          data.gallery.gallery3;
+
+      if (data.gallery.gallery4)
+        document.getElementById('gallery4_2').src =
+          data.gallery.gallery4;
     }
-    if (data.testimonials) {
-      document.getElementById('testimonialsTitle2').textContent = data.testimonials.testimonialsTitle || '';
-      document.getElementById('testimonialsSubtitle2').textContent = data.testimonials.testimonialsSubtitle || '';
-      document.getElementById('testimonial1Quote2').textContent = data.testimonials.testimonial1Quote || '';
-      document.getElementById('testimonial1Author2').textContent = data.testimonials.testimonial1Author || '';
-      document.getElementById('testimonial2Quote2').textContent = data.testimonials.testimonial2Quote || '';
-      document.getElementById('testimonial2Author2').textContent = data.testimonials.testimonial2Author || '';
-      document.getElementById('testimonial3Quote2').textContent = data.testimonials.testimonial3Quote || '';
-      document.getElementById('testimonial3Author2').textContent = data.testimonials.testimonial3Author || '';
-    }
-    if (data.contact) {
-      document.getElementById('contactTitle2').textContent = data.contact.contactTitle || '';
-      document.getElementById('contactSubtitle2').textContent = data.contact.contactSubtitle || '';
-      document.getElementById('contactAddress2').innerHTML = data.contact.contactAddress || '';
-      document.getElementById('contactPhone2').textContent = data.contact.contactPhone || '';
-      document.getElementById('contactEmail2').textContent = data.contact.contactEmail || '';
-      document.getElementById('contactHours2').textContent = data.contact.contactHours || '';
-    }
+
+    console.log('Website Updated');
+
   } catch (error) {
-    console.error('Error updating display:', error);
+
+    console.error(error);
   }
 }
 
-// ============ LOGO CLICK ============
+// ================= SECRET ADMIN =================
 let clickCount = 0;
 let clickTimer;
 
 document.getElementById('logoClick').addEventListener('click', function(e) {
+
   e.preventDefault();
+
   clickCount++;
-  console.log('Click count:', clickCount);
-  
-  if (clickCount === 5) {
-    const pwd = prompt('🔐 Password:');
+
+  if (clickCount >= 5) {
+
+    const pwd = prompt('🔐 Enter Password');
+
     if (pwd === '123iin456') {
+
       openAdmin();
+
     } else if (pwd !== null) {
-      alert('❌ Wrong password!');
+
+      alert('Wrong Password');
     }
+
     clickCount = 0;
   }
-  
+
   clearTimeout(clickTimer);
+
   clickTimer = setTimeout(() => {
     clickCount = 0;
   }, 3000);
 });
 
-// Load on page load
-window.addEventListener('load', updateDisplay);
+// ================= LOAD WEBSITE =================
+window.addEventListener('DOMContentLoaded', () => {
+  updateDisplay();
+});
+
 </script>
 
 </body>
