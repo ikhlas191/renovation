@@ -9,31 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- FIREBASE SDK - Module Version -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAZgKkqfU0hjAswp_uIOZnd9domR0oBqv8",
-      authDomain: "one-stop-solution-6cc02.firebaseapp.com",
-      databaseURL: "https://one-stop-solution-6cc02-default-rtdb.asia-southeast1.firebaseio.com",
-      projectId: "one-stop-solution-6cc02",
-      storageBucket: "one-stop-solution-6cc02.appspot.com",
-      messagingSenderId: "660109612716",
-      appId: "1:660109612716:web:10128b2a9e3729cba9b109"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    window.db = db;
-    window.ref = ref;
-    window.set = set;
-    window.get = get;
-    window.child = child;
-    console.log('Firebase OK');
-  </script>
-
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
     :root {
@@ -98,37 +73,23 @@
     .contact-info p { margin-bottom: 15px; line-height: 1.8; }
     .contact-form { background: white; padding: 50px; border-radius: 20px; box-shadow: var(--shadow); }
     .form-group { margin-bottom: 20px; }
-    .form-group input, .form-group textarea { width: 100%; padding: 16px; border: 1px solid #ddd; border-radius: 12px; font-family: inherit; }
+    .form-group input, .form-group textarea { width: 100%; padding: 16px; border: 1px solid #ddd; border-radius: 12px; font-family: inherit; font-size: 14px; }
     .form-group textarea { min-height: 150px; resize: none; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark); }
+    .form-submit-btn { background: var(--primary); color: white; padding: 16px 40px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 16px; transition: 0.3s; width: 100%; }
+    .form-submit-btn:hover { background: var(--secondary); }
+    .form-submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+    .form-message { padding: 15px; border-radius: 8px; margin-bottom: 20px; display: none; font-weight: 600; }
+    .form-message.success { background: #10b981; color: white; display: block; }
+    .form-message.error { background: #ef4444; color: white; display: block; }
     footer { background: var(--dark); color: white; text-align: center; padding: 30px 0; }
     .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 34px; text-decoration: none; z-index: 999; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-    .admin-panel { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; }
-    .admin-panel.active { display: flex; flex-direction: column; }
-    .admin-content { max-width: 1200px; width: 100%; margin: auto; padding: 40px 20px; background: white; border-radius: 15px; margin-top: 20px; margin-bottom: 20px; }
-    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: var(--primary); color: white; padding: 20px; border-radius: 10px; }
-    .admin-header h2 { margin: 0; }
-    .close-btn { background: red; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-    .admin-tab { padding: 10px 20px; background: #e5e7eb; border: none; border-radius: 5px; cursor: pointer; font-weight: 500; }
-    .admin-tab.active { background: var(--primary); color: white; }
-    .admin-section { display: none; }
-    .admin-section.active { display: block; }
-    .admin-form-group { margin-bottom: 20px; }
-    .admin-form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark); }
-    .admin-form-group input, .admin-form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 14px; }
-    .admin-form-group textarea { min-height: 100px; resize: vertical; }
-    .admin-btn { background: var(--primary); color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; transition: 0.3s; }
-    .admin-btn:hover { background: var(--secondary); }
-    .save-success { background: #10b981; color: white; padding: 15px; border-radius: 5px; margin-bottom: 20px; display: none; }
-    .save-success.show { display: block; }
     @media(max-width: 768px) {
       .hero h1 { font-size: 42px; }
       .hero p { font-size: 18px; }
       .nav-links { display: none; }
       .about-grid, .contact-grid { grid-template-columns: 1fr; }
       section { padding: 70px 0; }
-      .admin-tabs { flex-direction: column; }
-      .admin-tab { width: 100%; }
     }
   </style>
 </head>
@@ -138,7 +99,7 @@
 <header>
   <div class="container">
     <nav>
-      <div class="logo" id="logoClick">I.K 19 <span>Solution</span></div>
+      <div class="logo">I.K 19 <span>Solution</span></div>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
@@ -150,54 +111,8 @@
   </div>
 </header>
 
-<!-- ADMIN PANEL -->
-<div class="admin-panel" id="adminPanel">
-  <div class="admin-content">
-    <div class="admin-header">
-      <h2>🔧 Admin Panel - Edit Website</h2>
-      <button class="close-btn" onclick="closeAdmin()">Close</button>
-    </div>
-
-    <div class="save-success" id="saveSuccess">✓ Perubahan telah disimpan ke Firebase!</div>
-
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchTab('gallery', this)">Gallery</button>
-    </div>
-
-    <!-- GALLERY -->
-    <div class="admin-section active" id="gallerySection">
-      <h3>Edit Gallery (6 Images)</h3>
-      <div class="admin-form-group">
-        <label>Image 1 URL:</label>
-        <input type="text" id="gallery1" placeholder="https://...">
-      </div>
-      <div class="admin-form-group">
-        <label>Image 2 URL:</label>
-        <input type="text" id="gallery2" placeholder="https://...">
-      </div>
-      <div class="admin-form-group">
-        <label>Image 3 URL:</label>
-        <input type="text" id="gallery3" placeholder="https://...">
-      </div>
-      <div class="admin-form-group">
-        <label>Image 4 URL:</label>
-        <input type="text" id="gallery4" placeholder="https://...">
-      </div>
-      <div class="admin-form-group">
-        <label>Image 5 URL:</label>
-        <input type="text" id="gallery5" placeholder="https://...">
-      </div>
-      <div class="admin-form-group">
-        <label>Image 6 URL:</label>
-        <input type="text" id="gallery6" placeholder="https://...">
-      </div>
-      <button class="admin-btn" onclick="saveGallery()">Save Gallery</button>
-    </div>
-  </div>
-</div>
-
 <!-- HERO -->
-<section class="hero" id="heroSection2">
+<section class="hero">
   <div class="container">
     <div class="hero-content">
       <h1>Professional Electrical, Renovation & Network Installation Services</h1>
@@ -290,12 +205,12 @@
       <p>Our recent technical and renovation projects.</p>
     </div>
     <div class="gallery-grid">
-      <img id="gallery1_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0026.jpg" alt="Gallery 1">
-      <img id="gallery2_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0030.jpg" alt="Gallery 2">
-      <img id="gallery3_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0031.jpg" alt="Gallery 3">
-      <img id="gallery4_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0036.jpg" alt="Gallery 4">
-      <img id="gallery5_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0035.jpg" alt="Gallery 5">
-      <img id="gallery6_2" src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0041.jpg" alt="Gallery 6">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0026.jpg" alt="Gallery 1">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0030.jpg" alt="Gallery 2">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0031.jpg" alt="Gallery 3">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0036.jpg" alt="Gallery 4">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0035.jpg" alt="Gallery 5">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0041.jpg" alt="Gallery 6">
     </div>
   </div>
 </section>
@@ -339,21 +254,28 @@
         <p><strong>✉️ Email:</strong><br>Ikhlas.19@gmail.com</p>
         <p><strong>🕒 Working Hours:</strong><br>Monday - Sunday | 8AM - 10PM</p>
       </div>
+
       <div class="contact-form">
-        <form>
+        <div class="form-message" id="formMessage"></div>
+        
+        <form id="inquiryForm">
           <div class="form-group">
-            <input type="text" placeholder="Your Name" required>
+            <label>Your Name *</label>
+            <input type="text" id="formName" placeholder="Enter your name" required>
           </div>
           <div class="form-group">
-            <input type="email" placeholder="Your Email" required>
+            <label>Your Email *</label>
+            <input type="email" id="formEmail" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
-            <input type="text" placeholder="Phone Number" required>
+            <label>Phone Number *</label>
+            <input type="tel" id="formPhone" placeholder="Enter your phone number" required>
           </div>
           <div class="form-group">
-            <textarea placeholder="Describe your project or issue"></textarea>
+            <label>Project Description *</label>
+            <textarea id="formMessage2" placeholder="Describe your project or issue" required></textarea>
           </div>
-          <button class="btn btn-primary" type="submit">Send Inquiry</button>
+          <button type="submit" class="form-submit-btn" id="submitBtn">Send Inquiry via WhatsApp & Email</button>
         </form>
       </div>
     </div>
@@ -371,97 +293,86 @@
 
 <script>
 
-function openAdmin() {
-  document.getElementById('adminPanel').classList.add('active');
-  loadGallery();
-}
+const WHATSAPP_PHONE = '60182246616'; // WhatsApp number (without +)
+const EMAIL = 'Ikhlas.19@gmail.com'; // Email for CC
 
-function closeAdmin() {
-  document.getElementById('adminPanel').classList.remove('active');
-}
-
-function switchTab(tabName, el) {
-  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(tabName + 'Section').classList.add('active');
-  if (el) el.classList.add('active');
-}
-
-function showSuccess() {
-  const msg = document.getElementById('saveSuccess');
-  msg.classList.add('show');
-  setTimeout(() => msg.classList.remove('show'), 2000);
-}
-
-async function saveGallery() {
-  const data = {
-    gallery1: document.getElementById('gallery1').value,
-    gallery2: document.getElementById('gallery2').value,
-    gallery3: document.getElementById('gallery3').value,
-    gallery4: document.getElementById('gallery4').value,
-    gallery5: document.getElementById('gallery5').value,
-    gallery6: document.getElementById('gallery6').value
-  };
-  
-  try {
-    await window.set(window.ref(window.db, 'ik19/gallery'), data);
-    updateGalleryDisplay(data);
-    showSuccess();
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Error saving: ' + error.message);
-  }
-}
-
-async function loadGallery() {
-  try {
-    const snapshot = await window.get(window.child(window.ref(window.db), 'ik19/gallery'));
-    const data = snapshot.val() || {};
-    
-    document.getElementById('gallery1').value = data.gallery1 || '';
-    document.getElementById('gallery2').value = data.gallery2 || '';
-    document.getElementById('gallery3').value = data.gallery3 || '';
-    document.getElementById('gallery4').value = data.gallery4 || '';
-    document.getElementById('gallery5').value = data.gallery5 || '';
-    document.getElementById('gallery6').value = data.gallery6 || '';
-  } catch (error) {
-    console.error('Error loading gallery:', error);
-  }
-}
-
-function updateGalleryDisplay(data) {
-  if (data.gallery1) document.getElementById('gallery1_2').src = data.gallery1;
-  if (data.gallery2) document.getElementById('gallery2_2').src = data.gallery2;
-  if (data.gallery3) document.getElementById('gallery3_2').src = data.gallery3;
-  if (data.gallery4) document.getElementById('gallery4_2').src = data.gallery4;
-  if (data.gallery5) document.getElementById('gallery5_2').src = data.gallery5;
-  if (data.gallery6) document.getElementById('gallery6_2').src = data.gallery6;
-}
-
-let clickCount = 0;
-let clickTimer;
-
-document.getElementById('logoClick').addEventListener('click', function(e) {
+document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  clickCount++;
   
-  if (clickCount >= 5) {
-    const pwd = prompt('🔐 Enter Password');
-    if (pwd === '123iin456') {
-      openAdmin();
-    } else if (pwd !== null) {
-      alert('Wrong Password');
-    }
-    clickCount = 0;
-  }
+  const name = document.getElementById('formName').value;
+  const email = document.getElementById('formEmail').value;
+  const phone = document.getElementById('formPhone').value;
+  const message = document.getElementById('formMessage2').value;
   
-  clearTimeout(clickTimer);
-  clickTimer = setTimeout(() => { clickCount = 0; }, 3000);
-});
+  const submitBtn = document.getElementById('submitBtn');
+  const messageDiv = document.getElementById('formMessage');
+  
+  // Disable button during submission
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+  
+  try {
+    // Create message for WhatsApp
+    const whatsappMessage = `
+*NEW INQUIRY FROM WEBSITE*
 
-window.addEventListener('DOMContentLoaded', () => {
-  // Load gallery on page load if exists
-  loadGallery();
+*Name:* ${name}
+*Email:* ${email}
+*Phone:* ${phone}
+*Message:*
+${message}
+
+---
+Website: I.K 19 One Stop Solution
+    `.trim();
+    
+    // Send to WhatsApp
+    const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(whatsappMessage)}`;
+    
+    // Send to Email (via FormSubmit.co - free email service)
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('message', message);
+    formData.append('_subject', `New Inquiry from ${name}`);
+    formData.append('_captcha', 'false');
+    
+    // Send email via FormSubmit
+    const emailResponse = await fetch('https://formsubmit.co/' + EMAIL, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
+    if (emailResponse.ok) {
+      // Show success message
+      messageDiv.className = 'form-message success';
+      messageDiv.textContent = '✓ Inquiry sent successfully! Opening WhatsApp...';
+      
+      // Open WhatsApp after 1.5 seconds
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+        
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          document.getElementById('inquiryForm').reset();
+          messageDiv.style.display = 'none';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Inquiry via WhatsApp & Email';
+        }, 3000);
+      }, 1500);
+    } else {
+      throw new Error('Failed to send email');
+    }
+  } catch (error) {
+    messageDiv.className = 'form-message error';
+    messageDiv.textContent = '✗ Error: ' + error.message + '. Try opening WhatsApp directly.';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Inquiry via WhatsApp & Email';
+  }
 });
 
 </script>
