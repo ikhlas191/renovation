@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="I.K 19 One Stop Solution - Professional Electrical, Renovation & Network Services in Kuala Lumpur & Selangor">
+  <meta name="keywords" content="electrical services, renovation, network installation, KL, Selangor">
   <title>I.K 19 One Stop Solution | Electrical, Renovation & Network Services</title>
+
+  <!-- hreflang for SEO -->
+  <link rel="alternate" hreflang="en" href="https://ikhlas191.github.io/renovation/index.html" />
+  <link rel="alternate" hreflang="ms" href="https://ikhlas191.github.io/renovation/index-bm.html" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,12 +31,15 @@
     .container { width: 90%; max-width: 1400px; margin: auto; }
     header { position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(15px); background: rgba(255,255,255,0.9); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
     nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; }
-    .logo { font-size: 26px; font-weight: 700; color: var(--primary); cursor: pointer; user-select: none; padding: 10px 20px; border-radius: 8px; transition: 0.3s; }
-    .logo:hover { background: rgba(10, 102, 194, 0.1); }
+    .nav-left { display: flex; align-items: center; gap: 40px; }
+    .logo { font-size: 26px; font-weight: 700; color: var(--primary); user-select: none; }
     .logo span { color: var(--accent); }
     .nav-links { display: flex; gap: 30px; list-style: none; }
     .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; transition: 0.3s; }
     .nav-links a:hover { color: var(--primary); }
+    .nav-right { display: flex; gap: 20px; align-items: center; }
+    .language-toggle { background: var(--light); padding: 8px 16px; border-radius: 8px; border: 2px solid var(--primary); text-decoration: none; color: var(--primary); font-weight: 600; font-size: 12px; transition: 0.3s; }
+    .language-toggle:hover { background: var(--primary); color: white; }
     .btn { display: inline-block; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.3s; border: none; cursor: pointer; }
     .btn-primary { background: var(--primary); color: white; }
     .btn-primary:hover { background: var(--secondary); transform: translateY(-3px); }
@@ -90,6 +99,7 @@
       .nav-links { display: none; }
       .about-grid, .contact-grid { grid-template-columns: 1fr; }
       section { padding: 70px 0; }
+      .language-toggle { font-size: 10px; padding: 6px 12px; }
     }
   </style>
 </head>
@@ -99,14 +109,19 @@
 <header>
   <div class="container">
     <nav>
-      <div class="logo">I.K 19 <span>Solution</span></div>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <a href="https://wa.me/60182246616" class="btn btn-primary">Get Quote</a>
+      <div class="nav-left">
+        <div class="logo">I.K 19 <span>Solution</span></div>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <a href="index-bm.html" class="language-toggle">🇲🇾 Bahasa Melayu</a>
+        <a href="https://wa.me/60182246616" class="btn btn-primary">Get Quote</a>
+      </div>
     </nav>
   </div>
 </header>
@@ -293,8 +308,8 @@
 
 <script>
 
-const WHATSAPP_PHONE = '60182246616'; // WhatsApp number (without +)
-const EMAIL = 'Ikhlas.19@gmail.com'; // Email for CC
+const WHATSAPP_PHONE = '60182246616';
+const EMAIL = 'Ikhlas.19@gmail.com';
 
 document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
   e.preventDefault();
@@ -307,12 +322,10 @@ document.getElementById('inquiryForm').addEventListener('submit', async function
   const submitBtn = document.getElementById('submitBtn');
   const messageDiv = document.getElementById('formMessage');
   
-  // Disable button during submission
   submitBtn.disabled = true;
   submitBtn.textContent = 'Sending...';
   
   try {
-    // Create message for WhatsApp
     const whatsappMessage = `
 *NEW INQUIRY FROM WEBSITE*
 
@@ -326,10 +339,8 @@ ${message}
 Website: I.K 19 One Stop Solution
     `.trim();
     
-    // Send to WhatsApp
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(whatsappMessage)}`;
     
-    // Send to Email (via FormSubmit.co - free email service)
     const formData = new FormData();
     formData.append('name', name);
     formData.append('email', email);
@@ -338,7 +349,6 @@ Website: I.K 19 One Stop Solution
     formData.append('_subject', `New Inquiry from ${name}`);
     formData.append('_captcha', 'false');
     
-    // Send email via FormSubmit
     const emailResponse = await fetch('https://formsubmit.co/' + EMAIL, {
       method: 'POST',
       body: formData,
@@ -348,15 +358,12 @@ Website: I.K 19 One Stop Solution
     });
     
     if (emailResponse.ok) {
-      // Show success message
       messageDiv.className = 'form-message success';
       messageDiv.textContent = '✓ Inquiry sent successfully! Opening WhatsApp...';
       
-      // Open WhatsApp after 1.5 seconds
       setTimeout(() => {
         window.open(whatsappUrl, '_blank');
         
-        // Reset form after 3 seconds
         setTimeout(() => {
           document.getElementById('inquiryForm').reset();
           messageDiv.style.display = 'none';
