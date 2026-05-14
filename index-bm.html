@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="I.K 19 Solusi Satu Henti - Perkhidmatan Elektrik, Renovasi & Pemasangan Rangkaian Professional di Kuala Lumpur & Selangor">
+  <meta name="keywords" content="perkhidmatan elektrik, renovasi, pemasangan rangkaian, KL, Selangor">
+  <title>I.K 19 Solusi Satu Henti | Perkhidmatan Elektrik, Renovasi & Rangkaian</title>
+
+  <!-- hreflang for SEO -->
+  <link rel="alternate" hreflang="en" href="https://ikhlas191.github.io/renovation/index.html" />
+  <link rel="alternate" hreflang="ms" href="https://ikhlas191.github.io/renovation/index-bm.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    :root {
+      --primary: #0A66C2;
+      --secondary: #004182;
+      --accent: #FF8C42;
+      --dark: #111827;
+      --gray: #6B7280;
+      --light: #F9FAFB;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    body { font-family: 'Poppins', sans-serif; background: #fff; color: var(--dark); overflow-x: hidden; }
+    .container { width: 90%; max-width: 1400px; margin: auto; }
+    header { position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(15px); background: rgba(255,255,255,0.9); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; }
+    .nav-left { display: flex; align-items: center; gap: 40px; }
+    .logo { font-size: 26px; font-weight: 700; color: var(--primary); user-select: none; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; transition: 0.3s; }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-right { display: flex; gap: 20px; align-items: center; }
+    .language-toggle { background: var(--light); padding: 8px 16px; border-radius: 8px; border: 2px solid var(--primary); text-decoration: none; color: var(--primary); font-weight: 600; font-size: 12px; transition: 0.3s; }
+    .language-toggle:hover { background: var(--primary); color: white; }
+    .btn { display: inline-block; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.3s; border: none; cursor: pointer; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--secondary); transform: translateY(-3px); }
+    .btn-whatsapp { background: #25D366; color: white; }
+    .hero { min-height: 100vh; background-size: cover; background-position: center; display: flex; align-items: center; color: white; text-align: center; position: relative; margin-top: 80px; }
+    .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1; }
+    .hero-content { max-width: 900px; margin: auto; position: relative; z-index: 2; }
+    .hero h1 { font-size: 64px; line-height: 1.1; margin-bottom: 20px; }
+    .hero p { font-size: 22px; margin-bottom: 40px; color: #e5e7eb; }
+    .hero-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    section { padding: 100px 0; }
+    .section-title { text-align: center; margin-bottom: 60px; }
+    .section-title h2 { font-size: 42px; margin-bottom: 15px; color: var(--primary); }
+    .section-title p { color: var(--gray); max-width: 700px; margin: auto; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .about-image img { width: 100%; border-radius: 20px; box-shadow: var(--shadow); }
+    .about-content h3 { font-size: 36px; margin-bottom: 20px; }
+    .about-content p { color: var(--gray); line-height: 1.8; margin-bottom: 20px; }
+    .services { background: var(--light); }
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .service-card { background: white; padding: 40px 30px; border-radius: 20px; transition: 0.4s; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+    .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    .service-icon { width: 70px; height: 70px; background: var(--primary); color: white; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 25px; }
+    .service-card h3 { margin-bottom: 15px; font-size: 24px; }
+    .service-card p { color: var(--gray); line-height: 1.8; }
+    .stats { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; text-align: center; }
+    .stat-box h2 { font-size: 56px; margin-bottom: 10px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .gallery-grid img { width: 100%; height: 300px; object-fit: cover; border-radius: 18px; transition: 0.4s; }
+    .gallery-grid img:hover { transform: scale(1.03); }
+    .testimonial { background: var(--light); }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .testimonial-card { background: white; padding: 35px; border-radius: 18px; box-shadow: var(--shadow); }
+    .testimonial-card p { color: var(--gray); line-height: 1.8; margin-bottom: 20px; }
+    .testimonial-card h4 { color: var(--primary); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+    .contact-info { background: var(--primary); color: white; padding: 50px; border-radius: 20px; }
+    .contact-info h3 { margin-bottom: 25px; font-size: 32px; }
+    .contact-info p { margin-bottom: 15px; line-height: 1.8; }
+    .contact-form { background: white; padding: 50px; border-radius: 20px; box-shadow: var(--shadow); }
+    .form-group { margin-bottom: 20px; }
+    .form-group input, .form-group textarea { width: 100%; padding: 16px; border: 1px solid #ddd; border-radius: 12px; font-family: inherit; font-size: 14px; }
+    .form-group textarea { min-height: 150px; resize: none; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark); }
+    .form-submit-btn { background: var(--primary); color: white; padding: 16px 40px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 16px; transition: 0.3s; width: 100%; }
+    .form-submit-btn:hover { background: var(--secondary); }
+    .form-submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+    .form-message { padding: 15px; border-radius: 8px; margin-bottom: 20px; display: none; font-weight: 600; }
+    .form-message.success { background: #10b981; color: white; display: block; }
+    .form-message.error { background: #ef4444; color: white; display: block; }
+    footer { background: var(--dark); color: white; text-align: center; padding: 30px 0; }
+    .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 34px; text-decoration: none; z-index: 999; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    @media(max-width: 768px) {
+      .hero h1 { font-size: 42px; }
+      .hero p { font-size: 18px; }
+      .nav-links { display: none; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      section { padding: 70px 0; }
+      .language-toggle { font-size: 10px; padding: 6px 12px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <div class="nav-left">
+        <div class="logo">I.K 19 <span>Solution</span></div>
+        <ul class="nav-links">
+          <li><a href="#about">Tentang</a></li>
+          <li><a href="#services">Perkhidmatan</a></li>
+          <li><a href="#gallery">Galeri</a></li>
+          <li><a href="#contact">Hubungi</a></li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <a href="index.html" class="language-toggle">🇬🇧 English</a>
+        <a href="https://wa.me/60182246616" class="btn btn-primary">Dapatkan Sebut Harga</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Perkhidmatan Pemasangan Elektrik, Renovasi & Rangkaian Professional</h1>
+      <p>Solusi pemasangan elektrik, renovasi dan pemasangan kabel rangkaian yang dipercayai dengan lebih daripada 10 tahun pengalaman di Kuala Lumpur & Selangor.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">Minta Sebut Harga</a>
+        <a href="https://wa.me/60182246616" class="btn btn-whatsapp">WhatsApp Kami</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-title">
+      <h2>Tentang Syarikat Kami</h2>
+      <p>Penyedia solusi teknikal dan renovasi satu henti yang dipercayai.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200" alt="Pembinaan">
+      </div>
+      <div class="about-content">
+        <h3>10 Tahun Pengalaman Industri</h3>
+        <p>I.K 19 Solusi Satu Henti menyediakan perkhidmatan pemasangan elektrik, renovasi dan pemasangan kabel rangkaian berstruktur yang professional untuk projek residensial, pejabat dan komersial.</p>
+        <p>Kami memberi tumpuan kepada kualiti kerja, piawaian keselamatan dan sokongan yang boleh dipercayai untuk memastikan setiap projek diselesaikan dengan cekap dan professional.</p>
+        <a href="#contact" class="btn btn-primary">Hubungi Kami Hari Ini</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-title">
+      <h2>Perkhidmatan Professional Kami</h2>
+      <p>Perkhidmatan teknikal dan renovasi lengkap untuk rumah dan perniagaan.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <h3>Pemasangan Elektrik</h3>
+        <p>Pemasangan wayar elektrik professional, persediaan titik kuasa, pemasangan pencahayaan dan perkhidmatan penyelesaian masalah.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏠</div>
+        <h3>Kerja Renovasi</h3>
+        <p>Perkhidmatan renovasi dalaman dan luaran termasuk cat, partition, pemasangan siling, lantai dan kerja renovasi pejabat.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>Pemasangan Kabel Rangkaian</h3>
+        <p>Pemasangan kabel LAN, titik rangkaian, persediaan router, pemasangan kabel berstruktur dan penyelesaian masalah rangkaian.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-box">
+        <h2>10+</h2>
+        <p>Tahun Pengalaman</p>
+      </div>
+      <div class="stat-box">
+        <h2>1000+</h2>
+        <p>Projek Diselesaikan</p>
+      </div>
+      <div class="stat-box">
+        <h2>100%</h2>
+        <p>Kepuasan Pelanggan</p>
+      </div>
+      <div class="stat-box">
+        <h2>24/7</h2>
+        <p>Perkhidmatan Sokongan</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-title">
+      <h2>Galeri Projek</h2>
+      <p>Projek teknikal dan renovasi terbaru kami.</p>
+    </div>
+    <div class="gallery-grid">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0026.jpg" alt="Galeri 1">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0030.jpg" alt="Galeri 2">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0031.jpg" alt="Galeri 3">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0036.jpg" alt="Galeri 4">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0035.jpg" alt="Galeri 5">
+      <img src="https://raw.githubusercontent.com/ikhlas191/renovation/images/IMG-20260429-WA0041.jpg" alt="Galeri 6">
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <div class="container">
+    <div class="section-title">
+      <h2>Apa Kata Pelanggan Kami</h2>
+      <p>Dipercayai oleh pemilik rumah dan perniagaan di seluruh Malaysia.</p>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p>Perkhidmatan pemasangan elektrik yang cemerlang dengan respons cepat dan kerja professional.</p>
+        <h4>— En. Lim</h4>
+      </div>
+      <div class="testimonial-card">
+        <p>Kontraktor renovasi yang boleh dipercayai dengan harga baik dan hasil berkualiti.</p>
+        <h4>— Sarah K.</h4>
+      </div>
+      <div class="testimonial-card">
+        <p>Pemasangan kabel rangkaian professional untuk pejabat kami. Sangat disyorkan.</p>
+        <h4>— Ahmad R.</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-title">
+      <h2>Hubungi Kami</h2>
+      <p>Hubungi kami hari ini untuk konsultasi dan sebut harga.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Maklumat Hubungan</h3>
+        <p><strong>📍 Alamat:</strong><br>PW23-1 ONE MON'T KIARA,<br>No. 1 Jalan Kiara,<br>50480 Kuala Lumpur</p>
+        <p><strong>📞 Talian Panggilan:</strong><br>+60182246616</p>
+        <p><strong>✉️ Email:</strong><br>Ikhlas.19@gmail.com</p>
+        <p><strong>🕒 Jam Operasi:</strong><br>Isnin - Ahad | 8 PAGI - 10 MALAM</p>
+      </div>
+
+      <div class="contact-form">
+        <div class="form-message" id="formMessage"></div>
+        
+        <form id="inquiryForm">
+          <div class="form-group">
+            <label>Nama Anda *</label>
+            <input type="text" id="formName" placeholder="Masukkan nama anda" required>
+          </div>
+          <div class="form-group">
+            <label>Email Anda *</label>
+            <input type="email" id="formEmail" placeholder="Masukkan email anda" required>
+          </div>
+          <div class="form-group">
+            <label>Nombor Telefon *</label>
+            <input type="tel" id="formPhone" placeholder="Masukkan nombor telefon anda" required>
+          </div>
+          <div class="form-group">
+            <label>Penerangan Projek *</label>
+            <textarea id="formMessage2" placeholder="Terangkan projek atau masalah anda" required></textarea>
+          </div>
+          <button type="submit" class="form-submit-btn" id="submitBtn">Hantar Pertanyaan via WhatsApp & Email</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>© 2026 I.K 19 Solusi Satu Henti. Milik Penuh oleh Ikhlas NINETEEN Resources (001561921-K)</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/60182246616" class="whatsapp-float">💬</a>
+
+<script>
+
+const WHATSAPP_PHONE = '60182246616';
+const EMAIL = 'Ikhlas.19@gmail.com';
+
+document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const name = document.getElementById('formName').value;
+  const email = document.getElementById('formEmail').value;
+  const phone = document.getElementById('formPhone').value;
+  const message = document.getElementById('formMessage2').value;
+  
+  const submitBtn = document.getElementById('submitBtn');
+  const messageDiv = document.getElementById('formMessage');
+  
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Menghantarkan...';
+  
+  try {
+    const whatsappMessage = `
+*PERTANYAAN BARU DARI WEBSITE*
+
+*Nama:* ${name}
+*Email:* ${email}
+*Telefon:* ${phone}
+*Pesan:*
+${message}
+
+---
+Website: I.K 19 Solusi Satu Henti
+    `.trim();
+    
+    const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(whatsappMessage)}`;
+    
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('message', message);
+    formData.append('_subject', `Pertanyaan Baru dari ${name}`);
+    formData.append('_captcha', 'false');
+    
+    const emailResponse = await fetch('https://formsubmit.co/' + EMAIL, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
+    if (emailResponse.ok) {
+      messageDiv.className = 'form-message success';
+      messageDiv.textContent = '✓ Pertanyaan telah dihantar! Membuka WhatsApp...';
+      
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+        
+        setTimeout(() => {
+          document.getElementById('inquiryForm').reset();
+          messageDiv.style.display = 'none';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Hantar Pertanyaan via WhatsApp & Email';
+        }, 3000);
+      }, 1500);
+    } else {
+      throw new Error('Gagal menghantar email');
+    }
+  } catch (error) {
+    messageDiv.className = 'form-message error';
+    messageDiv.textContent = '✗ Ralat: ' + error.message + '. Cuba buka WhatsApp secara langsung.';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Hantar Pertanyaan via WhatsApp & Email';
+  }
+});
+
+</script>
+
+</body>
+</html>
